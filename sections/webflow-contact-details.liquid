@@ -1,0 +1,122 @@
+{%- comment -%}
+  Webflow-compatible Contact Details Cards Section.
+{%- endcomment -%}
+<div class="section pd-top-124px">
+  <div class="container-default w-container">
+    <div class="grid-3-columns _1-col-tablet children-perspective-1000px">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- capture block_w_id -%}
+            {%- cycle 'c5869f1e-b135-e02a-1de9-39bd68ba918d', '71235847-75a4-40b3-0db6-9883bace8d12', '3c290677-6261-475c-9a46-eff35b7af747' -%}
+          {%- endcapture -%}
+          <a class="card contact-link-card sibling-link-item w-inline-block" data-w-id="{{ block_w_id | strip }}" href="{{ block.settings.link_url }}" {{ block.shopify_attributes }} style="opacity:1">
+            {%- if block.settings.icon_image != blank -%}
+              {{ block.settings.icon_image | image_url: width: 80 | image_tag: alt: block.settings.title, class: 'max-w-40px-mbl mg-bottom-48px mg-bottom-24px-mbl', loading: 'lazy', width: 40, height: 40 }}
+            {%- else -%}
+              {%- capture default_icon -%}
+                {%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f792a9fdc65689d4407b9_phone-card-link-icon-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f7929c4aaa1985c888b1e_email-card-link-icon-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f792965fd9e21b902e7f9_chat-card-link-icon-shopper-webflow-ecommerce-template.svg' -%}
+              {%- endcapture -%}
+              <img alt="{{ block.settings.title | escape }}" class="max-w-40px-mbl mg-bottom-48px mg-bottom-24px-mbl" src="{{ default_icon | strip }}" width="40" height="40" />
+            {%- endif -%}
+            <h2 class="display-4 mg-bottom-10px">{{ block.settings.title | escape }}</h2>
+            <p class="mg-bottom-32px">{{ block.settings.text | escape }}</p>
+            <div class="text-300 medium color-neutral-800">{{ block.settings.action_text | escape }}</div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback items -->
+        {%- for i in (1..3) -%}
+          {%- capture mock_w_id -%}
+            {%- cycle 'c5869f1e-b135-e02a-1de9-39bd68ba918d', '71235847-75a4-40b3-0db6-9883bace8d12', '3c290677-6261-475c-9a46-eff35b7af747' -%}
+          {%- endcapture -%}
+          {%- capture mock_title -%}{%- cycle 'Call us', 'Send us an email', 'Live chat with us' -%}{%- endcapture -%}
+          {%- capture mock_text -%}{%- cycle 'Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam.', 'Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam.', 'Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam.' -%}{%- endcapture -%}
+          {%- capture mock_action -%}{%- cycle '+1 415-923-1138', 'support@commerce.com', 'Open live chat' -%}{%- endcapture -%}
+          {%- capture mock_url -%}{%- cycle 'tel:+1415-923-1138', 'mailto:support@commerce.com', 'https://www.intercom.com/' -%}{%- endcapture -%}
+          {%- capture default_icon -%}{%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f792a9fdc65689d4407b9_phone-card-link-icon-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f7929c4aaa1985c888b1e_email-card-link-icon-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f792965fd9e21b902e7f9_chat-card-link-icon-shopper-webflow-ecommerce-template.svg' -%}{%- endcapture -%}
+          <a class="card contact-link-card sibling-link-item w-inline-block" data-w-id="{{ mock_w_id | strip }}" href="{{ mock_url }}" style="opacity:1">
+            <img alt="{{ mock_title }}" class="max-w-40px-mbl mg-bottom-48px mg-bottom-24px-mbl" src="{{ default_icon }}" width="40" height="40" />
+            <h2 class="display-4 mg-bottom-10px">{{ mock_title }}</h2>
+            <p class="mg-bottom-32px">{{ mock_text }}</p>
+            <div class="text-300 medium color-neutral-800">{{ mock_action }}</div>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Contact Details",
+  "settings": [],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "contact_card",
+      "name": "Contact Option Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Call us",
+          "label": "Card Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam.",
+          "label": "Card Description"
+        },
+        {
+          "type": "text",
+          "id": "action_text",
+          "default": "+1 415-923-1138",
+          "label": "Card Action Text"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Card Target URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom Icon Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Contact Details",
+      "blocks": [
+        {
+          "type": "contact_card",
+          "settings": {
+            "title": "Call us",
+            "action_text": "+1 415-923-1138",
+            "link_url": "tel:+1415-923-1138"
+          }
+        },
+        {
+          "type": "contact_card",
+          "settings": {
+            "title": "Send us an email",
+            "action_text": "support@commerce.com",
+            "link_url": "mailto:support@commerce.com"
+          }
+        },
+        {
+          "type": "contact_card",
+          "settings": {
+            "title": "Live chat with us",
+            "action_text": "Open live chat",
+            "link_url": "https://www.intercom.com/"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

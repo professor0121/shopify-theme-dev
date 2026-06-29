@@ -1,13 +1,57 @@
 {%- comment -%}
-  Webflow-compatible Contact Form section.
+  Webflow-compatible Contact Form & Details Section.
 {%- endcomment -%}
-<div class="section">
+<div class="top-section">
   <div class="container-default w-container">
-    <div class="inner-container _640px-mbl center" style="max-width: 800px; margin: 0 auto;">
+    <div class="grid-2-columns _1fr---1-16fr gap-row-64px">
       
-      <div class="card contact-form" style="opacity: 1;">
-        <div class="width-100 mg-bottom-0">
+      <!-- Left Column: Heading and Showrooms -->
+      <div id="w-node-_2b355545-50ca-c645-f4c5-d532970604f9-9e2161e9">
+        <div class="inner-container _424px _100-tablet">
+          <h1 class="display-1 mg-bottom-24px" data-w-id="2e8eb5c1-09de-94f2-0e17-e64cbb0ea1ec" style="opacity: 1;">
+            {{ section.settings.heading | escape }}
+          </h1>
+        </div>
+        <div class="inner-container _526px _100-tablet">
+          <p class="mg-bottom-64px mg-bottom-32px-tablet" data-w-id="d99e8daa-54dd-f984-129c-4c901c85b64f" style="opacity: 1;">
+            {{ section.settings.text | escape }}
+          </p>
           
+          {%- if section.settings.show_showrooms_list -%}
+            <div data-w-id="dbe8fe4d-2abb-9c2d-39a2-a1aced0914f2" style="opacity: 1;">
+              <h2 class="display-4 mg-bottom-24px">{{ section.settings.showrooms_title | escape }}</h2>
+              <div class="grid-1-column gap-row-32px">
+                {%- if section.settings.showroom_1_label != blank -%}
+                  <a class="link-wrapper link-underline w-inline-block" href="{{ section.settings.showroom_1_url | default: '#' }}" target="_blank">
+                    <div class="text-200 medium">
+                      <div class="link-text">{{ section.settings.showroom_1_label | escape }}</div>
+                      <div class="line-rounded-icon link-icon-right"></div>
+                    </div>
+                    <div class="link-underline-wrapper">
+                      <div class="link-underline-inside" style="width:0%"></div>
+                    </div>
+                  </a>
+                {%- endif -%}
+                {%- if section.settings.showroom_2_label != blank -%}
+                  <a class="link-wrapper link-underline w-inline-block" href="{{ section.settings.showroom_2_url | default: '#' }}" target="_blank">
+                    <div class="text-200 medium">
+                      <div class="link-text">{{ section.settings.showroom_2_label | escape }}</div>
+                      <div class="line-rounded-icon link-icon-right"></div>
+                    </div>
+                    <div class="link-underline-wrapper">
+                      <div class="link-underline-inside" style="width:0%"></div>
+                    </div>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Right Column: Contact Form -->
+      <div class="card contact-form" data-w-id="403b19ff-d651-8eb2-54ab-0656ca158ec0" style="opacity: 1;">
+        <div class="width-100 mg-bottom-0 w-form">
           {%- form 'contact', class: 'width-100' -%}
             
             {%- if form.posted_successfully? -%}
@@ -65,7 +109,6 @@
             </div>
 
           {%- endform -%}
-
         </div>
       </div>
 
@@ -79,15 +122,61 @@
   "settings": [
     {
       "type": "text",
+      "id": "heading",
+      "default": "Send us a message",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam facilisis pellentesque ut quis.",
+      "label": "Description Text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_showrooms_list",
+      "default": true,
+      "label": "Show Showrooms Shortlist"
+    },
+    {
+      "type": "text",
+      "id": "showrooms_title",
+      "default": "Visit us our showrooms",
+      "label": "Showrooms List Title"
+    },
+    {
+      "type": "text",
+      "id": "showroom_1_label",
+      "default": "Los Angeles, CA",
+      "label": "Showroom 1 Label"
+    },
+    {
+      "type": "url",
+      "id": "showroom_1_url",
+      "label": "Showroom 1 Map Link"
+    },
+    {
+      "type": "text",
+      "id": "showroom_2_label",
+      "default": "New York, NY",
+      "label": "Showroom 2 Label"
+    },
+    {
+      "type": "url",
+      "id": "showroom_2_url",
+      "label": "Showroom 2 Map Link"
+    },
+    {
+      "type": "text",
       "id": "btn_label",
       "default": "Send Message",
-      "label": "Button Label"
+      "label": "Form Button Label"
     },
     {
       "type": "text",
       "id": "success_msg",
       "default": "Thanks for reaching out. We will get back to you soon.",
-      "label": "Success Message"
+      "label": "Form Success Message"
     }
   ],
   "presets": [

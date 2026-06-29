@@ -1,0 +1,253 @@
+{%- comment -%}
+  Webflow-compatible Showrooms Slider section.
+{%- endcomment -%}
+<div class="section overflow-hidden">
+  <div class="container-default w-container">
+    
+    <!-- Showrooms Header -->
+    <div class="grid-2-columns _3fr---1fr mg-bottom-48px">
+      <h2 class="display-2 mg-bottom-0">{{ section.settings.heading | escape }}</h2>
+    </div>
+
+    <!-- Showrooms Slider Wrapper -->
+    <div class="slider-wrapper slider-arrows-top-right w-slider" data-animation="slide" data-autoplay="false" data-autoplay-limit="0" data-delay="4000" data-disable-swipe="false" data-duration="500" data-easing="ease" data-hide-arrows="false" data-infinite="false" data-nav-spacing="3" id="showroom-slider-wrapper" style="opacity:1">
+      <div class="slider-mask width-1032px w-slider-mask">
+        
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="slide-item-mg mg-right-64px w-slide" {{ block.shopify_attributes }}>
+              <div class="grid-2-columns showrooms-grid">
+                
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 1280 | image_tag: alt: block.settings.title, class: 'border-radius-40px', loading: 'lazy', sizes: '(max-width: 479px) 100vw, (max-width: 767px) 95vw, (max-width: 991px) 60vw, (max-width: 1439px) 59vw, 640px', width: block.settings.image.width, height: block.settings.image.height }}
+                {%- else -%}
+                  {%- capture default_showroom_img -%}
+                    {%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f83e3279b0f360be5829b_new-york-showroom-image-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f83e3956794300093699d_los-angeles-showroom-image-shopper-webflow-ecommerce-template.jpg' -%}
+                  {%- endcapture -%}
+                  <img alt="{{ block.settings.title | escape }}" class="border-radius-40px" loading="lazy" src="{{ default_showroom_img | strip }}" width="640" height="480" />
+                {%- endif -%}
+
+                <div id="w-node-_94f61d0e-99ac-8398-f1fb-a4d953a06f72-9e2161e9">
+                  <h3 class="display-3">{{ block.settings.title | escape }}</h3>
+                  <p class="mg-bottom-32px">{{ block.settings.text | escape }}</p>
+                  
+                  <div class="grid-1-column gap-row-32px gap-row-20px-mbl">
+                    
+                    {%- if block.settings.address != blank -%}
+                      <div>
+                        <h3 class="heading-h4-size">Address</h3>
+                        <a class="color-neutral-600 link text-decoration-none w-inline-block" href="{{ block.settings.map_url | default: '#' }}" target="_blank">
+                          <div class="text-300">{{ block.settings.address | newline_to_br }}</div>
+                        </a>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.phone != blank -%}
+                      <div>
+                        <h3 class="heading-h4-size">Phone</h3>
+                        <a class="color-neutral-600 link text-decoration-none w-inline-block" href="tel:{{ block.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' }}">
+                          <div class="text-300">{{ block.settings.phone | escape }}</div>
+                        </a>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.email != blank -%}
+                      <div>
+                        <h3 class="heading-h4-size">Email</h3>
+                        <a class="color-neutral-600 link text-decoration-none w-inline-block" href="mailto:{{ block.settings.email }}">
+                          <div class="text-300">{{ block.settings.email | escape }}</div>
+                        </a>
+                      </div>
+                    {%- endif -%}
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback items -->
+          {%- for i in (1..2) -%}
+            {%- capture mock_title -%}{%- cycle 'New York', 'Los Angeles' -%}{%- endcapture -%}
+            {%- capture mock_address -%}{%- cycle '24 East Market Ave.\nJamaica, NY 11435', '672 Tailwater Lane Massapequa,\nLA 11758' -%}{%- endcapture -%}
+            {%- capture mock_phone -%}{%- cycle '(234) 346-4681', '(310) 365-1657' -%}{%- endcapture -%}
+            {%- capture mock_email -%}{%- cycle 'newyork@commerce.com', 'losangeles@commerce.com' -%}{%- endcapture -%}
+            {%- capture mock_img -%}{%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f83e3279b0f360be5829b_new-york-showroom-image-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630f83e3956794300093699d_los-angeles-showroom-image-shopper-webflow-ecommerce-template.jpg' -%}{%- endcapture -%}
+            <div class="slide-item-mg mg-right-64px w-slide">
+              <div class="grid-2-columns showrooms-grid">
+                <img alt="{{ mock_title }}" class="border-radius-40px" src="{{ mock_img }}" width="640" height="480" />
+                <div>
+                  <h3 class="display-3">{{ mock_title }}</h3>
+                  <p class="mg-bottom-32px">Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam.</p>
+                  <div class="grid-1-column gap-row-32px gap-row-20px-mbl">
+                    <div>
+                      <h3 class="heading-h4-size">Address</h3>
+                      <a class="color-neutral-600 link text-decoration-none w-inline-block" href="#" target="_blank">
+                        <div class="text-300">{{ mock_address | newline_to_br }}</div>
+                      </a>
+                    </div>
+                    <div>
+                      <h3 class="heading-h4-size">Phone</h3>
+                      <a class="color-neutral-600 link text-decoration-none w-inline-block" href="tel:{{ mock_phone }}">
+                        <div class="text-300">{{ mock_phone }}</div>
+                      </a>
+                    </div>
+                    <div>
+                      <h3 class="heading-h4-size">Email</h3>
+                      <a class="color-neutral-600 link text-decoration-none w-inline-block" href="mailto:{{ mock_email }}">
+                        <div class="text-300">{{ mock_email }}</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+
+      </div>
+
+      <!-- Arrow Controls -->
+      <div class="button-arrow-dark left-arrow---top-right top--112px w-slider-arrow-left">
+        <div></div>
+      </div>
+      <div class="button-arrow-dark right-arrow---top-right top--112px w-slider-arrow-right">
+        <div></div>
+      </div>
+      <div class="hidden-on-desktop w-slider-nav w-round"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkShowrooms = setInterval(function() {
+      if (window.jQuery && window.Webflow) {
+        clearInterval(checkShowrooms);
+        
+        const $ = window.jQuery;
+        const $slider = $('#showroom-slider-wrapper');
+        
+        if ($slider.length) {
+          // Listen for right arrow clicks
+          $slider.find('.w-slider-arrow-right').on('click', function(e) {
+            const $dots = $slider.find('.w-slider-nav .w-dot');
+            const total = $dots.length;
+            if (total <= 1) return;
+            
+            const activeIndex = $slider.find('.w-slider-nav .w-active').index();
+            if (activeIndex === total - 1) {
+              e.stopPropagation();
+              e.preventDefault();
+              $dots.first().trigger('click');
+            }
+          });
+          
+          // Listen for left arrow clicks
+          $slider.find('.w-slider-arrow-left').on('click', function(e) {
+            const $dots = $slider.find('.w-slider-nav .w-dot');
+            const total = $dots.length;
+            if (total <= 1) return;
+            
+            const activeIndex = $slider.find('.w-slider-nav .w-active').index();
+            if (activeIndex === 0) {
+              e.stopPropagation();
+              e.preventDefault();
+              $dots.last().trigger('click');
+            }
+          });
+        }
+      }
+    }, 100);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Webflow Showrooms Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Showrooms",
+      "label": "Heading"
+    }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "showroom",
+      "name": "Showroom Location",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "New York",
+          "label": "Location Name"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam.",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Showroom Image"
+        },
+        {
+          "type": "textarea",
+          "id": "address",
+          "default": "24 East Market Ave.\nJamaica, NY 11435",
+          "label": "Address"
+        },
+        {
+          "type": "url",
+          "id": "map_url",
+          "label": "Google Maps URL"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "default": "(234) 346-4681",
+          "label": "Phone Number"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "default": "newyork@commerce.com",
+          "label": "Email Address"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Showrooms Slider",
+      "blocks": [
+        {
+          "type": "showroom",
+          "settings": {
+            "title": "New York",
+            "address": "24 East Market Ave.\nJamaica, NY 11435",
+            "phone": "(234) 346-4681",
+            "email": "newyork@commerce.com"
+          }
+        },
+        {
+          "type": "showroom",
+          "settings": {
+            "title": "Los Angeles",
+            "address": "672 Tailwater Lane Massapequa,\nLA 11758",
+            "phone": "(310) 365-1657",
+            "email": "losangeles@commerce.com"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

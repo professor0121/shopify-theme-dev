@@ -1,0 +1,169 @@
+{%- comment -%}
+  Webflow-compatible FAQ Accordions section.
+{%- endcomment -%}
+<div class="section" style="filter: none;">
+  <div class="container-default w-container">
+    
+    <!-- FAQ Header -->
+    <div class="text-center mg-bottom-56px" data-w-id="a3575a76-e5c4-485c-e8a5-fa7d16318c7f" style="opacity: 1;">
+      <h2 class="display-2">{{ section.settings.heading | escape }}</h2>
+      <div class="inner-container _594px center">
+        <p class="mg-bottom-0">{{ section.settings.text | escape }}</p>
+      </div>
+    </div>
+
+    <!-- FAQ Accordions List -->
+    <div class="inner-container _1014px center" data-w-id="a3575a76-e5c4-485c-e8a5-fa7d16318c85" style="opacity: 1;">
+      <div class="w-layout-grid grid-1-column gap-row-32px">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="accordion-item-wrapper" data-w-id="a3575a76-e5c4-485c-e8a5-fa7d16318c87" {{ block.shopify_attributes }}>
+              <div class="accordion-content-wrapper max-w-660px">
+                <div class="accordion-header">
+                  <h3 class="mg-bottom-0">{{ block.settings.question | escape }}</h3>
+                </div>
+                <div class="acordion-body" style="height: 0px; opacity: 0; overflow: hidden; transition: height 0.3s ease, opacity 0.3s ease;">
+                  <div class="accordion-spacer"></div>
+                  <p class="mg-bottom-0">{{ block.settings.answer | escape }}</p>
+                </div>
+              </div>
+              <div class="accordion-side">
+                <div class="accordion-icon-container">
+                  <div class="accordion-btn-line vertical"></div>
+                  <div class="accordion-btn-line horizontal"></div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback Mockups -->
+          {%- for i in (1..4) -%}
+            {%- capture mock_q -%}
+              {%- cycle 'Do you offer international shipping?', 'What does the 30-day warranty cover?', 'Do you have an in-person showroom to see the products?', 'Do you offer payments on installments?' -%}
+            {%- endcapture -%}
+            <div class="accordion-item-wrapper">
+              <div class="accordion-content-wrapper max-w-660px">
+                <div class="accordion-header">
+                  <h3 class="mg-bottom-0">{{ mock_q }}</h3>
+                </div>
+                <div class="acordion-body" style="height: 0px; opacity: 0; overflow: hidden; transition: height 0.3s ease, opacity 0.3s ease;">
+                  <div class="accordion-spacer"></div>
+                  <p class="mg-bottom-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit id venenatis pretium risus euismod dictum egestas orci netus feugiat ut egestas ut sagittis tincidunt phasellus elit etiam cursus orci in. Id sed montes.</p>
+                </div>
+              </div>
+              <div class="accordion-side">
+                <div class="accordion-icon-container">
+                  <div class="accordion-btn-line vertical"></div>
+                  <div class="accordion-btn-line horizontal"></div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkFAQ = setInterval(function() {
+      if (window.jQuery) {
+        clearInterval(checkFAQ);
+        const $ = window.jQuery;
+        
+        $('.accordion-item-wrapper').off('click').on('click', function(e) {
+          const $body = $(this).find('.acordion-body');
+          const isCurrentlyOpen = $(this).hasClass('w-active');
+          
+          $(this).toggleClass('w-active');
+          
+          if (isCurrentlyOpen) {
+            $body.css('height', '0px').css('opacity', '0');
+          } else {
+            // Get natural height by temporarily resetting height constraints
+            $body.css('height', 'auto');
+            const naturalHeight = $body.height();
+            $body.css('height', '0px');
+            // Force reflow
+            $body[0].offsetHeight;
+            $body.css('height', naturalHeight + 'px').css('opacity', '1');
+          }
+        });
+      }
+    }, 100);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Webflow FAQ Accordions",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Frequently Asked Questions",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Lorem ipsum dolor sit amet consectetur adipiscing eli sed do eiusmod facilisis integer nulla tempor incididunt ut labore",
+      "label": "Subtext"
+    }
+  ],
+  "max_blocks": 20,
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "default": "Do you offer international shipping?",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit id venenatis pretium risus euismod dictum egestas orci netus feugiat ut egestas ut sagittis tincidunt phasellus elit etiam cursus orci in. Id sed montes.",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow FAQ Accordions",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer international shipping?"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What does the 30-day warranty cover?"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do you have an in-person showroom to see the products?"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer payments on installments?"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

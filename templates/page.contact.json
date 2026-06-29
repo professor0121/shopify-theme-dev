@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "contact_form": {
+      "type": "webflow-contact",
+      "settings": {
+        "heading": "Send us a message",
+        "text": "Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam facilisis pellentesque ut quis.",
+        "show_showrooms_list": true,
+        "showrooms_title": "Visit us our showrooms",
+        "showroom_1_label": "Los Angeles, CA",
+        "showroom_2_label": "New York, NY",
+        "btn_label": "Send Message",
+        "success_msg": "Thanks for reaching out. We will get back to you soon."
+      }
+    },
+    "contact_details": {
+      "type": "webflow-contact-details",
+      "settings": {}
+    },
+    "showrooms": {
+      "type": "webflow-showrooms",
+      "settings": {
+        "heading": "Showrooms"
+      }
+    },
+    "faq": {
+      "type": "webflow-faq",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "text": "Lorem ipsum dolor sit amet consectetur adipiscing eli sed do eiusmod facilisis integer nulla tempor incididunt ut labore"
+      }
+    }
+  },
+  "order": [
+    "contact_form",
+    "contact_details",
+    "showrooms",
+    "faq"
+  ]
+}
