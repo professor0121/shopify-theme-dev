@@ -1,0 +1,112 @@
+{%- comment -%}
+  Webflow-compatible Categories section.
+{%- endcomment -%}
+<div class="section pd-bottom-0">
+  <div class="container-default w-container">
+    <div class="inner-container _640px-mbl center">
+      <div class="grid-2-columns children-perspective-1000px">
+        {%- for block in section.blocks -%}
+          <a class="card image-bottom-right-link-card sibling-link-item w-inline-block" data-w-id="787d9b30-c660-abec-8843-6b6677c62092" href="{{ block.settings.link_url }}" style="opacity:1" {{ block.shopify_attributes }}>
+            <div class="inner-container _374px">
+              <h2 class="display-3">{{ block.settings.title | escape }}</h2>
+              <p class="mg-bottom-32px">{{ block.settings.text | escape }}</p>
+              
+              <div class="link-wrapper link-underline">
+                <div class="text-200 medium">
+                  <div class="link-text">{{ block.settings.btn_label | escape }}</div>
+                  <div class="line-rounded-icon link-icon-right"></div>
+                </div>
+                <div class="link-underline-wrapper">
+                  <div class="link-underline-inside" style="width:0%"></div>
+                </div>
+              </div>
+            </div>
+            
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 512 | image_tag: alt: block.settings.title, class: 'card-link-image-bottom-right---image', loading: 'lazy', width: block.settings.image.width, height: block.settings.image.height }}
+            {%- else -%}
+              {%- capture placeholder_image -%}
+                {%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6307c97eb06f196ae8ecb690_technology-category-image-shopper-webflow-ecommerce-template.png', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6307c97edc3ca518cbb73c3c_audio-category-image-shopper-webflow-ecommerce-template.png', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6307c97f46c9ebfef68713c1_gear-category-image-shopper-webflow-ecommerce-template.png', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6307c97e7a550c7ef7698768_computers-category-image-shopper-webflow-ecommerce-template.png' -%}
+              {%- endcapture -%}
+              <img alt="{{ block.settings.title | escape }}" class="card-link-image-bottom-right---image" loading="lazy" src="{{ placeholder_image | strip }}" width="512" height="400" />
+            {%- endif -%}
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Categories",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "category_card",
+      "name": "Category Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Technology",
+          "label": "Card Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "default": "Lorem ipsum dolor sit amet, consectetur dol adipiscing elit quis adipiscing id facilisis.",
+          "label": "Card Text"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "default": "Explore category",
+          "label": "Button Label"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Categories",
+      "blocks": [
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Technology"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Audio"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Gear"
+          }
+        },
+        {
+          "type": "category_card",
+          "settings": {
+            "title": "Computers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

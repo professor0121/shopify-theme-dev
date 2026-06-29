@@ -1,0 +1,109 @@
+{%- comment -%}
+  Webflow-compatible Newsletter section.
+{%- endcomment -%}
+<div class="section">
+  <div class="container-default w-container">
+    <div class="cta-card newsletter-cta-card" data-w-id="01582ce7-387a-8a70-f2ae-05253d4c6888" style="opacity:1">
+      
+      <!-- Heading -->
+      <div class="inner-container _674px" data-w-id="9bc6d679-8a58-f619-79e8-d50df874f6bf" style="opacity:1">
+        <h2 class="display-2 mg-bottom-40px">
+          {{ section.settings.heading | escape }}
+        </h2>
+      </div>
+
+      <!-- Form & Subscriptions -->
+      <div class="inner-container _440px width-100" data-w-id="7a132fc6-2cb6-c283-ae6f-e61644900444" style="opacity:1">
+        <div class="mg-bottom-24px">
+          {%- form 'customer' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            
+            <div class="position-relative---z-index-1">
+              <input
+                class="input newsletter-cta-input w-input"
+                name="contact[email]"
+                id="Newsletter-Email-{{ section.id }}"
+                placeholder="{{ section.settings.placeholder | escape }}"
+                value="{{ form.email }}"
+                required
+                type="email"
+              />
+              <div class="button-inside-input-wrapper">
+                <input class="btn-primary small w-button" type="submit" value="{{ section.settings.btn_label | escape }}" />
+              </div>
+            </div>
+
+            {%- if form.posted_successfully? -%}
+              <div class="success-message" style="display: block; margin-top: 15px; background: rgba(0, 128, 0, 0.1); border-radius: 8px; padding: 12px;">
+                <div class="newsletter-cta-success-message">
+                  <img alt="" class="mg-top-4px mg-top-2px-mbl" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6309459baba04e0b1b9cf94f_checkmark-outline-icon-shopper-webflow-ecommerce-template.svg" width="20" height="20" />
+                  <div style="margin-left: 10px; color: #fff;">{{ section.settings.success_msg | escape }}</div>
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if form.errors -%}
+              <div class="error-message" style="display: block; margin-top: 15px;">
+                <div>{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}.</div>
+              </div>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+
+        <div class="text-left">
+          <div class="flex-horizontal align-top">
+            <img alt="" class="mg-top-4px mg-top-2px-mbl" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6309459baba04e0b1b9cf94f_checkmark-outline-icon-shopper-webflow-ecommerce-template.svg" width="20" height="20" />
+            <div class="mg-left-10px">
+              {{ section.settings.note | escape }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Subscribe to our email newsletter and get 10% off",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "default": "Enter your email",
+      "label": "Input Placeholder"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "default": "Subscribe",
+      "label": "Button Label"
+    },
+    {
+      "type": "text",
+      "id": "success_msg",
+      "default": "Thanks for joining our newsletter.",
+      "label": "Success Message"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "default": "Join the 10,000 users in our newsletter",
+      "label": "Checkmark Note"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Newsletter"
+    }
+  ]
+}
+{% endschema %}

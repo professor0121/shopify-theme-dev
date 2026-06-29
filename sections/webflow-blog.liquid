@@ -1,0 +1,118 @@
+{%- comment -%}
+  Webflow-compatible Blog Posts section.
+{%- endcomment -%}
+<div class="section" style="filter: none;">
+  <div class="container-default w-container">
+    
+    <div class="grid-2-columns _1-5fr---1fr mg-bottom-56px">
+      <h2 class="display-2 mg-bottom-0" data-w-id="fdd059f9-3d39-0d74-b531-89ed08293337" style="opacity: 1;">
+        {{ section.settings.heading | escape }}
+      </h2>
+      <div data-w-id="4f5f7b79-3546-1736-60b8-2aeafd205ec0" id="w-node-_4f5f7b79-3546-1736-60b8-2aeafd205ec0-701f600c" style="opacity: 1;">
+        <a class="btn-secondary w-button" href="{{ section.settings.blog_url | default: '#' }}">
+          {{ section.settings.btn_label | escape }}
+        </a>
+      </div>
+    </div>
+
+    <div class="w-dyn-list">
+      <div class="grid-2-columns blog-v1-grid w-dyn-items" role="list">
+        {%- assign blog_handle = section.settings.blog -%}
+        {%- if blog_handle != blank and blogs[blog_handle].articles.size > 0 -%}
+          {%- for article in blogs[blog_handle].articles limit: 2 -%}
+            <div class="sibling-link-item w-dyn-item" data-w-id="fb1ab89e-cce0-c6fd-643e-9b742c572897" role="listitem">
+              <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="beb11af0-7f4e-71ef-c8bb-f42d68366677" href="{{ article.url }}" style="opacity: 1;">
+                <div class="link-item-image-container mg-bottom-24px">
+                  {%- if article.image -%}
+                    {{ article.image | image_url: width: 800 | image_tag: alt: article.title, class: 'width-100', loading: 'lazy', sizes: '(max-width: 479px) 100vw, (max-width: 767px) 95vw, (max-width: 1439px) 46vw, 636px', width: article.image.width, height: article.image.height }}
+                  {%- else -%}
+                    <img alt="{{ article.title | escape }}" class="width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630fa5bbfd8c04a54d6e040f_work-from-home-setup-thumbnail-v3-shopper-webflow-ecommerce-template.jpg" width="636" height="400" />
+                  {%- endif -%}
+                </div>
+                <h3 class="display-3 mg-bottom-16px">{{ article.title | escape }}</h3>
+                <p class="mg-bottom-0">
+                  {{ article.excerpt_or_content | strip_html | truncatewords: 25 }}
+                </p>
+                <div class="divider _32px---40px"></div>
+                <div class="grid-2-columns _2-col-mbl">
+                  <div class="badge-primary small" id="w-node-_25e89553-0eb3-28c4-457e-e509a1a8b4d6-701f600c">
+                    {{ article.tags[0] | default: 'Ideas' }}
+                  </div>
+                  <div id="w-node-_25dcdbe7-3260-cf11-25f4-a61b4a1836a1-701f600c">
+                    {{ article.published_at | date: "%B %d, %Y" }}
+                  </div>
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback mockup items -->
+          <div class="sibling-link-item w-dyn-item" data-w-id="fb1ab89e-cce0-c6fd-643e-9b742c572897" role="listitem">
+            <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="beb11af0-7f4e-71ef-c8bb-f42d68366677" href="#" style="opacity: 1;">
+              <div class="link-item-image-container mg-bottom-24px">
+                <img alt="How to create the perfect work from home setup" class="width-100" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630fa5bbfd8c04a54d6e040f_work-from-home-setup-thumbnail-v3-shopper-webflow-ecommerce-template.jpg" width="636" height="400" />
+              </div>
+              <h3 class="display-3 mg-bottom-16px">How to create the perfect work from home setup</h3>
+              <p class="mg-bottom-0">Lorem ipsum dolor sit amet conse ctetur adip iscing elit justo quis odio sit sit ac port titor sit males dolor sit.</p>
+              <div class="divider _32px---40px"></div>
+              <div class="grid-2-columns _2-col-mbl">
+                <div class="badge-primary small" id="w-node-_25e89553-0eb3-28c4-457e-e509a1a8b4d6-701f600c">Ideas</div>
+                <div id="w-node-_25dcdbe7-3260-cf11-25f4-a61b4a1836a1-701f600c">August 31, 2022</div>
+              </div>
+            </a>
+          </div>
+          <div class="sibling-link-item w-dyn-item" data-w-id="fb1ab89e-cce0-c6fd-643e-9b742c572897" role="listitem">
+            <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="beb11af0-7f4e-71ef-c8bb-f42d68366677" href="#" style="opacity: 1;">
+              <div class="link-item-image-container mg-bottom-24px">
+                <img alt="Alexa vs Siri vs Google Home: Which smart assistant is the best?" class="width-100" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630fa4ef29129042d9107145_alexa-vs-siri-vs-google-home-thumbnail-v3-shopper-webflow-ecommerce-template.jpg" width="636" height="400" />
+              </div>
+              <h3 class="display-3 mg-bottom-16px">Alexa vs Siri vs Google Home: Which smart assistant is the best?</h3>
+              <p class="mg-bottom-0">Lorem ipsum dolor sit amet conse ctetur adip iscing elit justo quis odio sit sit ac port titor sit males dolor sit.</p>
+              <div class="divider _32px---40px"></div>
+              <div class="grid-2-columns _2-col-mbl">
+                <div class="badge-primary small" id="w-node-_25e89553-0eb3-28c4-457e-e509a1a8b4d6-701f600c">Tutorials</div>
+                <div id="w-node-_25dcdbe7-3260-cf11-25f4-a61b4a1836a1-701f600c">August 31, 2022</div>
+              </div>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Blog Posts",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Our articles and news",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "default": "Browse all articles",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "blog_url",
+      "label": "Blog URL"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog Source"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Blog Posts"
+    }
+  ]
+}
+{% endschema %}

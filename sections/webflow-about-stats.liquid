@@ -1,0 +1,77 @@
+{%- comment -%}
+  Webflow-compatible About Stats grid section.
+{%- endcomment -%}
+<div class="section pd-top-68px">
+  <div class="container-default w-container">
+    <div class="stats-container">
+      {%- for block in section.blocks -%}
+        <div class="text-center" {{ block.shopify_attributes }}>
+          <div class="display-1 mg-bottom-20px">{{ block.settings.stat_value | escape }}</div>
+          <div class="text-300">{{ block.settings.stat_label | escape }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow About Stats",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "stat_item",
+      "name": "Stat Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_value",
+          "default": "2010",
+          "label": "Stat Value"
+        },
+        {
+          "type": "text",
+          "id": "stat_label",
+          "default": "Year founded",
+          "label": "Stat Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow About Stats",
+      "blocks": [
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "2010",
+            "stat_label": "Year founded"
+          }
+        },
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "+50",
+            "stat_label": "Collections"
+          }
+        },
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "70K",
+            "stat_label": "Happy Customers"
+          }
+        },
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "+250",
+            "stat_label": "Products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

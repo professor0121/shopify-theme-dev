@@ -1,102 +1,117 @@
 {%- comment -%}
-  Header section.
+  Webflow-compatible Header section.
 {%- endcomment -%}
-<div class="header-wrapper" id="shopify-section-header">
-  <header class="header container">
-    
-    <!-- Mobile Navigation Toggle -->
-    <button class="header__menu-toggle" type="button" aria-expanded="false" aria-controls="MobileMenu" aria-label="Toggle Navigation" onclick="toggleMobileMenu()">
-      {% render 'icon-menu' %}
-    </button>
-
-    <!-- Site Logo / Name -->
-    <div class="header__heading">
-      <a href="{{ routes.root_url }}" class="header__heading-link">
-        {%- if section.settings.logo != blank -%}
-          {{ section.settings.logo | image_url: width: 250 | image_tag: alt: shop.name }}
-        {%- else -%}
-          <span class="gradient-text">{{ shop.name }}</span>
-        {%- endif -%}
-      </a>
-    </div>
-
-    <!-- Navigation Menu (Desktop) -->
-    <nav class="header__inline-menu">
-      <ul class="list-menu">
-        {%- for link in section.settings.menu.links -%}
-          <li>
-            <a href="{{ link.url }}" class="header__menu-item {% if link.active %} header__menu-item--active{% endif %}">
-              {{ link.title | escape }}
-            </a>
-          </li>
-        {%- endfor -%}
-      </ul>
-    </nav>
-
-    <!-- Header Actions (Search & Cart) -->
-    <div class="header__icons">
-      <a href="{{ routes.search_url }}" class="header__icon">
-        {% render 'icon-search' %}
-      </a>
+<div class="header-wrapper w-nav" data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner">
+  <div class="container-default w-container">
+    <div class="header-content-wrapper">
       
-      <button class="header__icon" id="cart-icon-bubble" type="button" onclick="const drawer = document.querySelector('cart-drawer'); if (drawer) drawer.open();" aria-label="Open cart drawer">
-        {% render 'icon-cart' %}
-        <div class="cart-count-bubble">
-          <span aria-hidden="true">{{ cart.item_count }}</span>
-          <span class="visually-hidden">{{ cart.item_count }} items in cart</span>
+      <!-- Left side Navigation Menu (Desktop) -->
+      <div class="header-right-side hidden-on-tablet">
+        <ul class="header-nav-menu-list" role="list">
+          {%- for link in section.settings.menu.links -%}
+            {%- if link.links != blank -%}
+              <li class="header-nav-list-item left">
+                <div class="dropdown-wrapper w-dropdown" data-delay="0" data-hover="true">
+                  <div class="dropdown-toggle w-dropdown-toggle">
+                    <div>{{ link.title | escape }}</div>
+                    <div class="line-rounded-icon dropdown-arrow"></div>
+                  </div>
+                  <nav class="dropdown-column-wrapper w-dropdown-list">
+                    <div class="dropdown-pd pd-28px">
+                      <div class="w-layout-grid grid-1-column dropdown-link-column">
+                        {%- for childlink in link.links -%}
+                          <a class="dropdown-link w-dropdown-link" href="{{ childlink.url }}">
+                            {{ childlink.title | escape }}
+                          </a>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  </nav>
+                </div>
+              </li>
+            {%- else -%}
+              <li class="header-nav-list-item left">
+                <a class="header-nav-link w-nav-link" href="{{ link.url }}">{{ link.title | escape }}</a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Logo (Middle) -->
+      <div class="header-middle">
+        <a class="header-logo-link w-nav-brand" href="{{ routes.root_url }}">
+          {%- if section.settings.logo != blank -%}
+            {{ section.settings.logo | image_url: width: 250 | image_tag: alt: shop.name, style: 'max-height: 40px; width: auto;', width: section.settings.logo.width, height: section.settings.logo.height }}
+          {%- else -%}
+            <img alt="Commerce X Webflow Template - Logo" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/63334bd4541e515298dcb4bd_logo-commerce-webflow-ecommerce-template.svg" width="180" height="40" />
+          {%- endif -%}
+        </a>
+      </div>
+
+      <!-- Right side Actions (Mobile Menu + Cart) -->
+      <div class="header-left-side">
+        <!-- Navigation Menu for Mobile (Tablet and down) -->
+        <nav class="header-nav-menu-wrapper w-nav-menu" role="navigation">
+          <ul class="header-nav-menu-list" role="list">
+            {%- for link in section.settings.menu.links -%}
+              {%- if link.links != blank -%}
+                <li class="header-nav-list-item left show-in-tablet">
+                  <div class="dropdown-wrapper w-dropdown" data-delay="0" data-hover="true">
+                    <div class="dropdown-toggle w-dropdown-toggle">
+                      <div>{{ link.title | escape }}</div>
+                      <div class="line-rounded-icon dropdown-arrow"></div>
+                    </div>
+                    <nav class="dropdown-column-wrapper w-dropdown-list">
+                      <div class="dropdown-pd pd-48px pd-24px-tablet">
+                        <div class="w-layout-grid grid-1-column dropdown-link-column">
+                          {%- for childlink in link.links -%}
+                            <a class="dropdown-link w-dropdown-link" href="{{ childlink.url }}">
+                              {{ childlink.title | escape }}
+                            </a>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
+                </li>
+              {%- else -%}
+                <li class="header-nav-list-item left show-in-tablet">
+                  <a class="header-nav-link w-nav-link" href="{{ link.url }}">{{ link.title | escape }}</a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </nav>
+
+        <!-- Cart Button -->
+        <div class="w-commerce-commercecartwrapper" data-node-type="commerce-cart-wrapper">
+          <a aria-haspopup="dialog" aria-label="Open cart" class="w-commerce-commercecartopenlink cart-button w-inline-block" href="#" role="button" onclick="const drawer = document.querySelector('cart-drawer'); if (drawer) drawer.open(); return false;">
+            <div class="w-commerce-commercecartopenlinkcount cart-quantity">{{ cart.item_count }}</div>
+            <img alt="Cart" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6307abe4c4e2be299db62add_cart-menu-icon-shopper-webflow-ecommerce-template.svg" width="24" height="24" />
+          </a>
         </div>
-      </button>
-    </div>
 
-  </header>
-</div>
+        <!-- Mobile Hamburger Trigger -->
+        <div class="hamburger-menu-wrapper w-nav-button" aria-label="menu" role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu" aria-expanded="false">
+          <div class="hamburger-menu-bar top"></div>
+          <div class="hamburger-menu-bar bottom"></div>
+        </div>
 
-<!-- Mobile Navigation Drawer -->
-<div id="MobileMenu" class="drawer" aria-hidden="true" style="justify-content: flex-start;">
-  <div class="drawer__overlay" onclick="toggleMobileMenu()"></div>
-  <div class="drawer__inner" style="transform: translateX(-100%); width: 300px; padding: 2.4rem;">
-    <div class="drawer__header" style="padding: 0 0 2rem 0;">
-      <h3 class="drawer__heading">Menu</h3>
-      <button class="drawer__close" type="button" onclick="toggleMobileMenu()">
-        {% render 'icon-close' %}
-      </button>
-    </div>
-    <div class="drawer__content" style="padding: 0;">
-      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2rem;">
-        {%- for link in section.settings.menu.links -%}
-          <li>
-            <a href="{{ link.url }}" style="font-size: 1.8rem; font-weight: 600;">
-              {{ link.title | escape }}
-            </a>
-          </li>
-        {%- endfor -%}
-      </ul>
+      </div>
+
     </div>
   </div>
 </div>
 
-<script>
-  function toggleMobileMenu() {
-    const mobileMenu = document.getElementById('MobileMenu');
-    if (!mobileMenu) return;
-    const isExpanded = mobileMenu.getAttribute('aria-hidden') === 'false';
-    
-    mobileMenu.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
-    const inner = mobileMenu.querySelector('.drawer__inner');
-    if (inner) {
-      inner.style.transform = isExpanded ? 'translateX(-100%)' : 'translateX(0)';
-    }
-  }
-</script>
-
 {% schema %}
 {
-  "name": "Header",
+  "name": "Webflow Header",
   "settings": [
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo Image"
+      "label": "Custom Logo Image"
     },
     {
       "type": "link_list",

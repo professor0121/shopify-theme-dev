@@ -1,0 +1,99 @@
+{%- comment -%}
+  Webflow-compatible Contact Form section.
+{%- endcomment -%}
+<div class="section">
+  <div class="container-default w-container">
+    <div class="inner-container _640px-mbl center" style="max-width: 800px; margin: 0 auto;">
+      
+      <div class="card contact-form" style="opacity: 1;">
+        <div class="width-100 mg-bottom-0">
+          
+          {%- form 'contact', class: 'width-100' -%}
+            
+            {%- if form.posted_successfully? -%}
+              <div class="success-message" style="display: block; background: rgba(0, 128, 0, 0.1); padding: 24px; border-radius: 12px; margin-bottom: 24px;">
+                <div class="newsletter-cta-success-message">
+                  <span class="line-rounded-icon success-message-check large" style="font-size: 24px; color: #fff;"></span>
+                  <div style="margin-left: 15px;">
+                    <h3 class="display-3 color-neutral-100 mg-bottom-8px">Thank you</h3>
+                    <p class="color-neutral-300 mg-bottom-0">{{ section.settings.success_msg | escape }}</p>
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+            
+            {%- if form.errors -%}
+              <div class="error-message" style="display: block; background: rgba(255, 0, 0, 0.1); padding: 18px; border-radius: 12px; margin-bottom: 24px;">
+                <p class="mg-bottom-0">Oops! Something went wrong while submitting the form. Please check your inputs.</p>
+              </div>
+            {%- endif -%}
+
+            <div class="w-layout-grid grid-2-columns form">
+              <div>
+                <input class="input w-input" name="contact[name]" placeholder="Full name" required="" type="text" value="{% if customer %}{{ customer.name }}{% endif %}" />
+              </div>
+              <div>
+                <input class="input w-input" name="contact[email]" placeholder="Email address" required="" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" />
+              </div>
+              <div>
+                <input class="input w-input" name="contact[phone]" placeholder="Phone number" type="tel" value="{% if customer %}{{ customer.phone }}{% endif %}" />
+              </div>
+              <div>
+                <input class="input w-input" name="contact[subject]" placeholder="Subject" required="" type="text" />
+              </div>
+              <div id="w-node-_18391729-bcfc-eeb4-d732-8f56fd2db9e5-9e2161e9">
+                <textarea class="text-area w-input" name="contact[body]" placeholder="Message" required=""></textarea>
+              </div>
+              
+              <input class="btn-primary w-button" type="submit" value="{{ section.settings.btn_label | escape }}" id="w-node-_18391729-bcfc-eeb4-d732-8f56fd2db9e9-9e2161e9" style="border: none; cursor: pointer;" />
+              
+              <!-- Social links -->
+              <div class="social-media-links-container" id="w-node-e164e38b-e06f-71b3-4c5a-fbb3dcc768ce-9e2161e9">
+                {%- if settings.social_facebook_link != blank -%}
+                  <a class="social-icon-link dark w-inline-block" href="{{ settings.social_facebook_link }}" target="_blank"><div class="social-icon-font"></div></a>
+                {%- endif -%}
+                {%- if settings.social_twitter_link != blank -%}
+                  <a class="social-icon-link dark w-inline-block" href="{{ settings.social_twitter_link }}" target="_blank"><div class="social-icon-font"></div></a>
+                {%- endif -%}
+                {%- if settings.social_instagram_link != blank -%}
+                  <a class="social-icon-link dark w-inline-block" href="{{ settings.social_instagram_link }}" target="_blank"><div class="social-icon-font"></div></a>
+                {%- endif -%}
+                {%- if settings.social_youtube_link != blank -%}
+                  <a class="social-icon-link dark w-inline-block" href="{{ settings.social_youtube_link }}" target="_blank"><div class="social-icon-font"></div></a>
+                {%- endif -%}
+              </div>
+            </div>
+
+          {%- endform -%}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Contact Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "btn_label",
+      "default": "Send Message",
+      "label": "Button Label"
+    },
+    {
+      "type": "text",
+      "id": "success_msg",
+      "default": "Thanks for reaching out. We will get back to you soon.",
+      "label": "Success Message"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Contact Form"
+    }
+  ]
+}
+{% endschema %}

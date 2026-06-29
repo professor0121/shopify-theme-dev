@@ -1,0 +1,112 @@
+{%- comment -%}
+  Webflow-compatible About Values section.
+{%- endcomment -%}
+<div class="section pd-bottom-0">
+  <div class="container-default w-container">
+    
+    <div class="text-center mg-bottom-40px" data-w-id="8efc23d3-eda3-db04-107c-3228794bd1f3" style="opacity:1">
+      <div class="inner-container _526px center">
+        <h2 class="display-3 mg-bottom-12px">{{ section.settings.heading | escape }}</h2>
+        <p class="mg-bottom-0">{{ section.settings.text | escape }}</p>
+      </div>
+    </div>
+
+    <div class="inner-container _510px-mbl center">
+      <div class="grid-3-columns gap-row-22px">
+        {%- for block in section.blocks -%}
+          <div class="card our-values-card" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon_url != blank -%}
+              <img alt="{{ block.settings.title | escape }}" class="mg-bottom-32px" loading="lazy" src="{{ block.settings.icon_url }}" width="64" height="64" />
+            {%- elsif block.settings.icon_image != blank -%}
+              {{ block.settings.icon_image | image_url: width: 120 | image_tag: alt: block.settings.title, class: 'mg-bottom-32px', loading: 'lazy', width: 64, height: 64 }}
+            {%- else -%}
+              <img alt="Design" class="mg-bottom-32px" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1d71b88b944d16b2d5_design-value-icon-shopper-webflow-ecommerce-template.svg" width="64" height="64" />
+            {%- endif -%}
+            <h3 class="display-4">{{ block.settings.title | escape }}</h3>
+            <p class="mg-bottom-0">{{ block.settings.desc | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow About Values",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Our values",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar dolor sime elementum tempus hac tellus.",
+      "label": "Description"
+    }
+  ],
+  "max_blocks": 9,
+  "blocks": [
+    {
+      "type": "value_item",
+      "name": "Value Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Design",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar dolor sime elementum tempus hac tellus.",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "icon_url",
+          "label": "Static Icon URL (Webflow SVG)"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image upload"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow About Values",
+      "blocks": [
+        {
+          "type": "value_item",
+          "settings": {
+            "title": "Design",
+            "icon_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1d71b88b944d16b2d5_design-value-icon-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "title": "Quality",
+            "icon_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1d557f11b10c0d68bf_quality-value-icon-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "title": "Sustainability",
+            "icon_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1e53a677399a4d6c3b_sustainability-value-icon-shopper-webflow-ecommerce-template.svg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

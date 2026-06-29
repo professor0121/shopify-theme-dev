@@ -1,23 +1,106 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "webflow_hero": {
+      "type": "webflow-hero",
       "settings": {
-        "title": "Discover the Future of Shopping",
-        "text": "Experience a faster, smoother, and stunningly gorgeous shopping journey powered by Lumina custom web layouts."
+        "heading": "High-quality tech gadgets & accessories",
+        "text": "Sem sit amet adipiscing ullamcorper adipiscing adipiscing dole convallis tincidunt senectus enim blandit elit egestas.",
+        "btn_1_label": "Browse products",
+        "btn_1_link": "#products",
+        "btn_2_label": "About us",
+        "btn_2_link": "/pages/about"
       }
     },
-    "featured": {
-      "type": "featured-collection",
+    "webflow_categories": {
+      "type": "webflow-categories",
+      "blocks": {
+        "cat_1": {
+          "type": "category_card",
+          "settings": {
+            "title": "Technology",
+            "text": "Lorem ipsum dolor sit amet, consectetur dol adipiscing elit quis adipiscing id facilisis."
+          }
+        },
+        "cat_2": {
+          "type": "category_card",
+          "settings": {
+            "title": "Audio",
+            "text": "Lorem ipsum dolor sit amet, consectetur dol adipiscing elit quis adipiscing id facilisis."
+          }
+        },
+        "cat_3": {
+          "type": "category_card",
+          "settings": {
+            "title": "Gear",
+            "text": "Lorem ipsum dolor sit amet, consectetur dol adipiscing elit quis adipiscing id facilisis."
+          }
+        },
+        "cat_4": {
+          "type": "category_card",
+          "settings": {
+            "title": "Computers",
+            "text": "Lorem ipsum dolor sit amet, consectetur dol adipiscing elit quis adipiscing id facilisis."
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4"
+      ],
+      "settings": {}
+    },
+    "webflow_featured": {
+      "type": "webflow-featured",
       "settings": {
-        "title": "Trending Products",
-        "subtitle": "CURATED FOR YOU",
-        "limit": 4
+        "limit": 6,
+        "search_placeholder": "Search for products"
+      }
+    },
+    "webflow_cta": {
+      "type": "webflow-cta",
+      "settings": {
+        "heading": "Why are we different?",
+        "text": "Lorem ipsum dolor sit amet consectetur adipiscing elit arcu mollis tortor velit facilisis diam vel posuere ullamcorper.",
+        "btn_1_label": "About us",
+        "btn_link": "/pages/about"
+      }
+    },
+    "webflow_slider": {
+      "type": "webflow-slider",
+      "settings": {
+        "heading": "Featured Products",
+        "view_all_label": "Browse all products",
+        "view_all_link": "/collections/all"
+      }
+    },
+    "webflow_blog": {
+      "type": "webflow-blog",
+      "settings": {
+        "heading": "Our articles and news",
+        "btn_label": "Browse all articles",
+        "blog_url": "/blogs/news"
+      }
+    },
+    "webflow_newsletter": {
+      "type": "webflow-newsletter",
+      "settings": {
+        "heading": "Subscribe to our email newsletter and get 10% off",
+        "placeholder": "Enter your email",
+        "btn_label": "Subscribe",
+        "success_msg": "Thanks for joining our newsletter.",
+        "note": "Join the 10,000 users in our newsletter"
       }
     }
   },
   "order": [
-    "hero",
-    "featured"
+    "webflow_hero",
+    "webflow_categories",
+    "webflow_featured",
+    "webflow_cta",
+    "webflow_slider",
+    "webflow_blog",
+    "webflow_newsletter"
   ]
 }

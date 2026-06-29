@@ -1,68 +1,324 @@
 {%- comment -%}
-  Main Collection Section.
+  Webflow-compatible Main Collection Details Section.
 {%- endcomment -%}
-<section class="main-collection container" style="margin-top: 6rem; margin-bottom: 8rem;">
-  
-  <div class="collection-header text-center" style="margin-bottom: 6rem;">
-    <h1 class="gradient-text" style="font-size: 4rem; font-weight: 800; margin-bottom: 1.5rem;">
-      {{ collection.title }}
-    </h1>
-    {%- if collection.description != blank -%}
-      <div class="collection-description text-muted" style="max-width: 600px; margin: 0 auto; font-size: 1.5rem;">
-        {{ collection.description }}
-      </div>
-    {%- endif -%}
-  </div>
 
-  {%- paginate collection.products by section.settings.products_per_page -%}
-    {%- if collection.products.size > 0 -%}
-      <div class="product-grid">
-        {%- for product in collection.products -%}
-          {% render 'product-card', product: product %}
-        {%- endfor -%}
-      </div>
+{%- assign mode = section.settings.layout_mode | default: 'all' -%}
+{%- assign products_count = collection.products.size -%}
 
-      {%- if paginate.pages > 1 -%}
-        <nav class="pagination-wrapper text-center" style="margin-top: 6rem; display: flex; justify-content: center; gap: 1.5rem; align-items: center;">
-          {%- if paginate.previous -%}
-            <a href="{{ paginate.previous.url }}" class="button button--secondary" style="padding: 0.8rem 1.6rem;">&laquo; Previous</a>
+{%- if products_count >= 10 -%}
+  {%- assign products_2col = collection.products | slice: 0, 4 -%}
+  {%- assign products_3col = collection.products | slice: 4, 6 -%}
+  {%- assign products_4col = collection.products | slice: 10, 8 -%}
+{%- else -%}
+  {%- assign products_2col = collection.products -%}
+  {%- assign products_3col = collection.products -%}
+  {%- assign products_4col = collection.products -%}
+{%- endif -%}
+
+<!-- Banner Header Section -->
+<div class="section pd-180px bg-neutral-200">
+  <div class="container-default w-container">
+    <div class="text-center">
+      <div class="inner-container _608px center">
+        <h1 class="display-1" data-w-id="6589b4cf-6f62-62bc-ec75-178f9fb4320e" style="opacity: 1;">
+          {%- if collection.handle == 'all' -%}
+            {{ section.settings.all_products_title | default: 'All Products' }}
+          {%- else -%}
+            {{ collection.title | escape }}
           {%- endif -%}
-          
-          <span class="text-muted" style="font-size: 1.4rem;">
-            Page {{ paginate.current_page }} of {{ paginate.pages }}
-          </span>
-
-          {%- if paginate.next -%}
-            <a href="{{ paginate.next.url }}" class="button button--secondary" style="padding: 0.8rem 1.6rem;">Next &raquo;</a>
-          {%- endif -%}
-        </nav>
-      {%- endif -%}
-    {%- else -%}
-      <div class="text-center" style="padding: 6rem 0;">
-        <p class="text-muted" style="font-size: 1.8rem; margin-bottom: 3rem;">
-          No products found in this collection.
+        </h1>
+        <p class="mg-bottom-0" data-w-id="2e3711ed-951a-61c3-78af-0cafb811e7b3" style="opacity: 1;">
+          {{ collection.description | default: section.settings.default_description | escape }}
         </p>
-        <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
-          View All Products
-        </a>
       </div>
-    {%- endif -%}
-  {%- endpaginate -%}
+    </div>
+  </div>
+</div>
 
-</section>
+<!-- ==================== 2 COLUMNS SECTION ==================== -->
+{%- if mode == 'all' or mode == '2-col' -%}
+  <div class="section" style="filter: none;">
+    <div class="container-default w-container">
+      {%- if mode == 'all' -%}
+        <h2 class="display-2 text-center mg-bottom-32px" data-w-id="d4198967-735e-cdf7-6587-88f0623d087a" style="opacity: 1;">2 columns</h2>
+      {%- endif -%}
+      
+      <!-- Category Navigation Links (Shown on top of the first visible section) -->
+      {%- if section.settings.show_categories -%}
+        <div class="mg-bottom-64px w-dyn-list" data-w-id="4f8eb1a1-6a3e-200f-f048-101023f86678" style="opacity: 1;">
+          <div class="flex-horizontal w-dyn-items" role="list" style="flex-wrap: wrap; justify-content: center; gap: 10px;">
+            <div class="flex align-center w-dyn-item" role="listitem">
+              <a class="text-400 product-category-link-text{% if collection.handle == 'all' or collection.handle == blank %} w--current{% endif %}" href="/collections/all">All</a>
+            </div>
+            {%- for col in collections -%}
+              {%- unless col.handle == 'frontpage' or col.handle == 'all' -%}
+                <div class="flex align-center w-dyn-item" role="listitem">
+                  <div class="text-400 color-neutral-400 mg-sides-24px">/</div>
+                  <a class="text-400 product-category-link-text{% if collection.handle == col.handle %} w--current{% endif %}" href="{{ col.url }}">{{ col.title | escape }}</a>
+                </div>
+              {%- endunless -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="w-dyn-list">
+        <div class="grid-2-columns products-v1-grid w-dyn-items" role="list">
+          {%- if products_2col.size > 0 -%}
+            {%- for product in products_2col limit: 4 -%}
+              <div class="sibling-link-item w-dyn-item" data-w-id="270aab21-a4ee-47a9-82e6-abd7e6e59bb3" role="listitem">
+                <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="270aab21-a4ee-47a9-82e6-abd7e6e59bb4" href="{{ product.url }}" style="opacity: 1;">
+                  <div class="mg-bottom-40px">
+                    {%- if product.featured_media -%}
+                      {{ product.featured_media | image_url: width: 800 | image_tag: alt: product.title, class: 'border-radius-56px border-radius-24px-mbl', loading: 'lazy', sizes: '(max-width: 479px) 93vw, (max-width: 767px) 46vw, (max-width: 991px) 45vw, (max-width: 1439px) 44vw, 622px', width: product.featured_media.width, height: product.featured_media.height }}
+                    {%- else -%}
+                      <img alt="Placeholder" class="border-radius-56px border-radius-24px-mbl" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg" width="622" height="622" />
+                    {%- endif -%}
+                  </div>
+                  <div class="product-bottom-details-grid">
+                    <div>
+                      <div class="mg-bottom-6px">
+                        <div class="text-200 text-uppercase color-neutral-600">
+                          {{ product.type | default: 'Gear' }}
+                        </div>
+                      </div>
+                      <h3 class="heading-h2-size">{{ product.title | escape }}</h3>
+                      <div class="text-200 medium color-neutral-800">{{ product.price | money }}</div>
+                    </div>
+                    <div class="link-wrapper link-underline">
+                      <div class="text-200 medium">
+                        <div class="link-text">Add to cart</div>
+                        <div class="line-rounded-icon link-icon-right"></div>
+                      </div>
+                      <div class="link-underline-wrapper">
+                        <div class="link-underline-inside" style="width:0%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <!-- Fallback Mockups -->
+            {%- for i in (1..4) -%}
+              {%- capture mock_title -%}{%- cycle 'Wireless Mouse', 'Water Bottle', 'Smart Speaker', 'Earphones' -%}{%- endcapture -%}
+              {%- capture mock_category -%}{%- cycle 'Technology', 'Gear', 'Audio', 'Audio' -%}{%- endcapture -%}
+              {%- capture mock_price -%}{%- cycle '$49.99 USD', '$12.99 USD', '$69.99 USD', '$59.99 USD' -%}{%- endcapture -%}
+              {%- capture mock_img -%}{%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630926a1d9508303772a6e2b_water-bottle-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309262990580508f1970783_smart-speaker-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309251c905805703796f7e5_earphones-product-image-small-shopper-webflow-ecommerce-template.jpg' -%}{%- endcapture -%}
+              <div class="sibling-link-item w-dyn-item" data-w-id="270aab21-a4ee-47a9-82e6-abd7e6e59bb3" role="listitem">
+                <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="270aab21-a4ee-47a9-82e6-abd7e6e59bb4" href="#" style="opacity: 1;">
+                  <div class="mg-bottom-40px">
+                    <img alt="{{ mock_title }}" class="border-radius-56px border-radius-24px-mbl" src="{{ mock_img }}" width="622" height="622" />
+                  </div>
+                  <div class="product-bottom-details-grid">
+                    <div>
+                      <div class="mg-bottom-6px">
+                        <div class="text-200 text-uppercase color-neutral-600">{{ mock_category }}</div>
+                      </div>
+                      <h3 class="heading-h2-size">{{ mock_title }}</h3>
+                      <div class="text-200 medium color-neutral-800">{{ mock_price }}</div>
+                    </div>
+                    <div class="link-wrapper link-underline">
+                      <div class="text-200 medium">
+                        <div class="link-text">Add to cart</div>
+                        <div class="line-rounded-icon link-icon-right"></div>
+                      </div>
+                      <div class="link-underline-wrapper">
+                        <div class="link-underline-inside" style="width:0%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<!-- Divider 1 -->
+{%- if mode == 'all' -%}
+  <div data-w-id="50af8105-f8fd-94fa-a385-7106c03411b9" style="opacity: 1;">
+    <div class="container-default w-container">
+      <div class="divider mg-0"></div>
+    </div>
+  </div>
+{%- endif -%}
+
+<!-- ==================== 3 COLUMNS SECTION ==================== -->
+{%- if mode == 'all' or mode == '3-col' -%}
+  <div class="section" style="filter: none;">
+    <div class="container-default w-container">
+      {%- if mode == 'all' -%}
+        <h2 class="display-2 text-center mg-bottom-32px" data-w-id="226343e0-6d88-555d-5e48-967c6b83abb7" style="opacity: 1;">3 columns</h2>
+      {%- endif -%}
+      
+      <div class="inner-container _510px-mbl center">
+        <div class="w-dyn-list">
+          <div class="grid-3-columns products-grid-v1 w-dyn-items" role="list">
+            {%- if products_3col.size > 0 -%}
+              {%- for product in products_3col limit: 6 -%}
+                <div class="sibling-link-item w-dyn-item" data-w-id="226343e0-6d88-555d-5e48-967c6b83abc7" role="listitem">
+                  <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="226343e0-6d88-555d-5e48-967c6b83abc8" href="{{ product.url }}" style="opacity: 1;">
+                    <div class="link-item-image-container border-radius-56px mg-bottom-40px">
+                      {%- if product.featured_media -%}
+                        {{ product.featured_media | image_url: width: 600 | image_tag: alt: product.title, loading: 'lazy', sizes: '(max-width: 479px) 93vw, (max-width: 767px) 92vw, (max-width: 991px) 46vw, (max-width: 1439px) 30vw, 416px', width: product.featured_media.width, height: product.featured_media.height }}
+                      {%- else -%}
+                        <img alt="Placeholder" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg" width="416" height="416" />
+                      {%- endif -%}
+                    </div>
+                    <div class="mg-bottom-6px">
+                      <div class="text-200 text-uppercase color-neutral-600">
+                        {{ product.type | default: 'Gear' }}
+                      </div>
+                    </div>
+                    <h3 class="display-4 mg-bottom-20px">{{ product.title | escape }}</h3>
+                    <div class="text-200 medium color-neutral-800">{{ product.price | money }}</div>
+                  </a>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <!-- Fallback Mockups -->
+              {%- for i in (1..6) -%}
+                {%- capture mock_title -%}{%- cycle 'Wireless Mouse', 'Water Bottle', 'Smart Speaker', 'Earphones', 'Smartwatch', 'iPhone Case' -%}{%- endcapture -%}
+                {%- capture mock_category -%}{%- cycle 'Technology', 'Gear', 'Audio', 'Audio', 'Technology', 'Gear' -%}{%- endcapture -%}
+                {%- capture mock_price -%}{%- cycle '$49.99 USD', '$12.99 USD', '$69.99 USD', '$59.99 USD', '$169.99 USD', '$29.99 USD' -%}{%- endcapture -%}
+                {%- capture mock_img -%}{%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630926a1d9508303772a6e2b_water-bottle-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309262990580508f1970783_smart-speaker-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309251c905805703796f7e5_earphones-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309239d7bd2af332eee548e_smartwatch-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309233ecfd613f8b63332d6_iphone-case-product-image-small-shopper-webflow-ecommerce-template.jpg' -%}{%- endcapture -%}
+                <div class="sibling-link-item w-dyn-item" data-w-id="226343e0-6d88-555d-5e48-967c6b83abc7" role="listitem">
+                  <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="226343e0-6d88-555d-5e48-967c6b83abc8" href="#" style="opacity: 1;">
+                    <div class="link-item-image-container border-radius-56px mg-bottom-40px">
+                      <img alt="{{ mock_title }}" src="{{ mock_img }}" width="416" height="416" />
+                    </div>
+                    <div class="mg-bottom-6px">
+                      <div class="text-200 text-uppercase color-neutral-600">{{ mock_category }}</div>
+                    </div>
+                    <h3 class="display-4 mg-bottom-20px">{{ mock_title }}</h3>
+                    <div class="text-200 medium color-neutral-800">{{ mock_price }}</div>
+                  </a>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<!-- Divider 2 -->
+{%- if mode == 'all' -%}
+  <div data-w-id="5f5523f2-2225-6154-a002-18926ef901ba" style="opacity: 1;">
+    <div class="container-default w-container">
+      <div class="divider mg-0"></div>
+    </div>
+  </div>
+{%- endif -%}
+
+<!-- ==================== 4 COLUMNS SECTION ==================== -->
+{%- if mode == 'all' or mode == '4-col' -%}
+  <div class="section" style="filter: none;">
+    <div class="container-default w-container">
+      {%- if mode == 'all' -%}
+        <h2 class="display-2 text-center mg-bottom-32px" data-w-id="8b3bd2a6-e2db-257a-74bb-f5d4820cfb0a" style="opacity: 1;">4 columns</h2>
+      {%- endif -%}
+      
+      <div class="w-dyn-list">
+        <div class="grid-4-columns products-grid-v3 w-dyn-items" role="list">
+          {%- if products_4col.size > 0 -%}
+            {%- for product in products_4col limit: 8 -%}
+              <div class="sibling-link-item w-dyn-item" data-w-id="8b3bd2a6-e2db-257a-74bb-f5d4820cfb1a" role="listitem">
+                <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="8b3bd2a6-e2db-257a-74bb-f5d4820cfb1b" href="{{ product.url }}" style="opacity: 1;">
+                  <div class="link-item-image-container border-radius-48px mg-bottom-40px">
+                    {%- if product.featured_media -%}
+                      {{ product.featured_media | image_url: width: 400 | image_tag: alt: product.title, loading: 'lazy', sizes: '(max-width: 479px) 93vw, (max-width: 991px) 46vw, (max-width: 1439px) 21vw, 304px', width: product.featured_media.width, height: product.featured_media.height }}
+                    {%- else -%}
+                      <img alt="Placeholder" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg" width="304" height="304" />
+                    {%- endif -%}
+                  </div>
+                  <div class="mg-bottom-6px">
+                    <div class="text-200 text-uppercase color-neutral-600">
+                      {{ product.type | default: 'Gear' }}
+                    </div>
+                  </div>
+                  <h3 class="display-4 mg-bottom-16px">{{ product.title | escape }}</h3>
+                  <div class="text-200 medium color-neutral-800">{{ product.price | money }}</div>
+                </a>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <!-- Fallback Mockups -->
+            {%- for i in (1..8) -%}
+              {%- capture mock_title -%}{%- cycle 'Wireless Mouse', 'Water Bottle', 'Smart Speaker', 'Earphones', 'Smartwatch', 'iPhone Case', 'Power Bank', 'Backpack' -%}{%- endcapture -%}
+              {%- capture mock_category -%}{%- cycle 'Technology', 'Gear', 'Audio', 'Audio', 'Technology', 'Gear', 'Technology', 'Gear' -%}{%- endcapture -%}
+              {%- capture mock_price -%}{%- cycle '$49.99 USD', '$12.99 USD', '$69.99 USD', '$59.99 USD', '$169.99 USD', '$29.99 USD', '$69.99 USD', '$39.99 USD' -%}{%- endcapture -%}
+              {%- capture mock_img -%}{%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630926a1d9508303772a6e2b_water-bottle-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309262990580508f1970783_smart-speaker-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309251c905805703796f7e5_earphones-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309239d7bd2af332eee548e_smartwatch-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309233ecfd613f8b63332d6_iphone-case-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630922d9808ef4d81d8bca77_powerbank-product-image-small-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630922341424ce502519b10c_backpack-product-image-small-shopper-webflow-ecommerce-template.jpg' -%}{%- endcapture -%}
+              <div class="sibling-link-item w-dyn-item" data-w-id="8b3bd2a6-e2db-257a-74bb-f5d4820cfb1a" role="listitem">
+                <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="8b3bd2a6-e2db-257a-74bb-f5d4820cfb1b" href="#" style="opacity: 1;">
+                  <div class="link-item-image-container border-radius-48px mg-bottom-40px">
+                    <img alt="{{ mock_title }}" src="{{ mock_img }}" width="304" height="304" />
+                  </div>
+                  <div class="mg-bottom-6px">
+                    <div class="text-200 text-uppercase color-neutral-600">{{ mock_category }}</div>
+                  </div>
+                  <h3 class="display-4 mg-bottom-16px">{{ mock_title }}</h3>
+                  <div class="text-200 medium color-neutral-800">{{ mock_price }}</div>
+                </a>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
 
 {% schema %}
 {
-  "name": "Main Collection",
+  "name": "Webflow Collection Lists",
   "settings": [
     {
-      "type": "range",
-      "id": "products_per_page",
-      "min": 8,
-      "max": 24,
-      "step": 4,
-      "default": 12,
-      "label": "Products per Page"
+      "type": "text",
+      "id": "all_products_title",
+      "default": "All Products (V1)",
+      "label": "All Products Page Title"
+    },
+    {
+      "type": "textarea",
+      "id": "default_description",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "label": "Default Page Description"
+    },
+    {
+      "type": "select",
+      "id": "layout_mode",
+      "options": [
+        {
+          "value": "all",
+          "label": "Show All Layouts (Replicate static design)"
+        },
+        {
+          "value": "2-col",
+          "label": "2 Columns Only"
+        },
+        {
+          "value": "3-col",
+          "label": "3 Columns Only"
+        },
+        {
+          "value": "4-col",
+          "label": "4 Columns Only"
+        }
+      ],
+      "default": "all",
+      "label": "Layout Presentation Mode"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_categories",
+      "default": true,
+      "label": "Show Category Links Header"
     }
   ]
 }

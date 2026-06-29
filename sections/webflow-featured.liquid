@@ -1,0 +1,161 @@
+{%- comment -%}
+  Webflow-compatible Featured Products Grid section.
+{%- endcomment -%}
+<div class="section" id="products" style="filter: none;">
+  <div class="container-default w-container">
+    
+    <div data-w-id="5e44f35f-e0d5-3045-38cd-a654d46bdfae" style="opacity:1">
+      <div class="mg-bottom-40px-tablet">
+        <div class="grid-2-columns _1-col-tablet gap-row-40px">
+          
+          <!-- Category Quick Filter Links -->
+          <div class="mg-bottom-20px mg-bottom-0-tablet w-dyn-list" id="w-node-c87a54b0-18d0-add0-e7a0-cd9056f9cfa0-701f600c">
+            <div class="flex align-center w-dyn-items" role="list">
+              <div class="flex align-center w-dyn-item" role="listitem">
+                <a class="product-category-link {% if collection.handle == blank %}w--current{% endif %}" href="{{ routes.all_products_collection_url }}">All</a>
+                
+                {%- assign filter_collection_1 = collections[section.settings.filter_col_1] -%}
+                {%- if filter_collection_1 != blank -%}
+                  <img alt="" class="product-category-divider" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6308f91bd152760fad70eee8_product-category-divider-shopper-webflow-ecommerce-template.svg" width="8" height="18" />
+                  <a class="product-category-link {% if collection.handle == filter_collection_1.handle %}w--current{% endif %}" href="{{ filter_collection_1.url }}">
+                    {{ filter_collection_1.title | escape }}
+                  </a>
+                {%- endif -%}
+
+                {%- assign filter_collection_2 = collections[section.settings.filter_col_2] -%}
+                {%- if filter_collection_2 != blank -%}
+                  <img alt="" class="product-category-divider" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6308f91bd152760fad70eee8_product-category-divider-shopper-webflow-ecommerce-template.svg" width="8" height="18" />
+                  <a class="product-category-link {% if collection.handle == filter_collection_2.handle %}w--current{% endif %}" href="{{ filter_collection_2.url }}">
+                    {{ filter_collection_2.title | escape }}
+                  </a>
+                {%- endif -%}
+
+                {%- assign filter_collection_3 = collections[section.settings.filter_col_3] -%}
+                {%- if filter_collection_3 != blank -%}
+                  <img alt="" class="product-category-divider" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6308f91bd152760fad70eee8_product-category-divider-shopper-webflow-ecommerce-template.svg" width="8" height="18" />
+                  <a class="product-category-link {% if collection.handle == filter_collection_3.handle %}w--current{% endif %}" href="{{ filter_collection_3.url }}">
+                    {{ filter_collection_3.title | escape }}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Search Input -->
+          <div class="inner-container _510px width-100" id="w-node-ed3079b3-6a28-a570-1a05-a33b0d91295d-701f600c">
+            <form action="{{ routes.search_url }}" class="position-relative---z-index-1 mg-bottom-0 w-form" method="get">
+              <input class="input search-bar---icon-right w-input" id="search" maxlength="256" name="q" placeholder="{{ section.settings.search_placeholder | escape }}" required="" type="search" />
+              <input class="search-bar-button-icon w-button" type="submit" value="" />
+            </form>
+          </div>
+
+        </div>
+      </div>
+      <div class="hidden-on-tablet"><div class="divider pd--1px---44px height-1-5px"></div></div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="inner-container _510px-mbl center">
+      <div class="w-dyn-list">
+        <div class="grid-3-columns products-grid-v1 w-dyn-items" role="list">
+          {%- assign main_collection = collections[section.settings.collection] | default: collection -%}
+          {%- if main_collection != blank and main_collection.products.size > 0 -%}
+            {%- for product in main_collection.products limit: section.settings.limit -%}
+              <div class="sibling-link-item w-dyn-item" data-w-id="e192fe5f-0c49-0054-7579-c11773ebf72c" role="listitem">
+                <a class="text-decoration-none color-transition-none w-inline-block" data-w-id="7e583b19-97eb-4fa3-d598-7a278aa54721" href="{{ product.url }}" style="opacity:1">
+                  <div class="link-item-image-container border-radius-56px mg-bottom-40px">
+                    {%- if product.featured_media -%}
+                      {{ product.featured_media | image_url: width: 600 | image_tag: alt: product.title, loading: 'lazy', sizes: '(max-width: 479px) 93vw, (max-width: 767px) 92vw, (max-width: 991px) 46vw, (max-width: 1439px) 30vw, 416px', width: product.featured_media.width, height: product.featured_media.height }}
+                    {%- else -%}
+                      <img alt="{{ product.title | escape }}" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg" width="416" height="416" />
+                    {%- endif -%}
+                  </div>
+                  <div class="mg-bottom-6px">
+                    <div class="text-200 text-uppercase color-neutral-600">{{ product.type | default: "Gear" }}</div>
+                  </div>
+                  <h2 class="display-4">{{ product.title | escape }}</h2>
+                  <div class="text-200 medium color-neutral-800">{{ product.price | money }}</div>
+                </a>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <!-- Fallback placeholders if no collection is selected -->
+            <div class="sibling-link-item w-dyn-item" role="listitem">
+              <a class="text-decoration-none color-transition-none w-inline-block" href="#" style="opacity:1">
+                <div class="link-item-image-container border-radius-56px mg-bottom-40px">
+                  <img alt="Wireless Mouse" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092705e83aaa27b8bdac10_wireless-mouse-product-image-small-shopper-webflow-ecommerce-template.jpg" width="416" height="416" />
+                </div>
+                <div class="mg-bottom-6px">
+                  <div class="text-200 text-uppercase color-neutral-600">Technology</div>
+                </div>
+                <h2 class="display-4">Wireless Mouse</h2>
+                <div class="text-200 medium color-neutral-800">$ 49.99 USD</div>
+              </a>
+            </div>
+            <div class="sibling-link-item w-dyn-item" role="listitem">
+              <a class="text-decoration-none color-transition-none w-inline-block" href="#" style="opacity:1">
+                <div class="link-item-image-container border-radius-56px mg-bottom-40px">
+                  <img alt="Water Bottle" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/630926a1d9508303772a6e2b_water-bottle-product-image-small-shopper-webflow-ecommerce-template.jpg" width="416" height="416" />
+                </div>
+                <div class="mg-bottom-6px">
+                  <div class="text-200 text-uppercase color-neutral-600">Gear</div>
+                </div>
+                <h2 class="display-4">Water Bottle</h2>
+                <div class="text-200 medium color-neutral-800">$ 12.99 USD</div>
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Products Catalog",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Catalog Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 6,
+      "label": "Products Limit"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "default": "Search for products",
+      "label": "Search Placeholder"
+    },
+    {
+      "type": "collection",
+      "id": "filter_col_1",
+      "label": "Filter Collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "filter_col_2",
+      "label": "Filter Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "filter_col_3",
+      "label": "Filter Collection 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Products Catalog"
+    }
+  ]
+}
+{% endschema %}

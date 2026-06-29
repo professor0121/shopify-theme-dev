@@ -1,0 +1,93 @@
+{%- comment -%}
+  Webflow-compatible Hero section.
+{%- endcomment -%}
+<div class="top-section-image-right">
+  <div class="container-default w-container">
+    <div class="inner-container _44 _100-tablet">
+      
+      <h1 class="display-2 mg-bottom-12px" data-w-id="d51d5ddb-2224-f77b-894b-9d3e3b756aa5" style="opacity:1">
+        {{ section.settings.heading | escape }}
+      </h1>
+      
+      <p class="mg-bottom-32px" data-w-id="a1734b47-64ad-d1c7-cf49-a461993be2c8" style="opacity:1">
+        {{ section.settings.text | escape }}
+      </p>
+      
+      <div class="buttons-row" data-w-id="29e2bdb9-4ddb-ae58-cf51-b86dc3943260" style="opacity:1">
+        {%- if section.settings.btn_1_label != blank -%}
+          <a class="btn-primary button-row w-button" href="{{ section.settings.btn_1_link }}">
+            {{ section.settings.btn_1_label | escape }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.btn_2_label != blank -%}
+          <a class="btn-secondary w-button" href="{{ section.settings.btn_2_link }}">
+            {{ section.settings.btn_2_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="top-section-image-right---img-wrapper" data-w-id="379794c0-1716-a7ed-ca34-7bc01e7c1884" style="opacity:1">
+    <div class="top-section-image-right---img-gradient"></div>
+    <div class="top-section-image-right---img-gradient-tablet"></div>
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1456 | image_tag: alt: section.settings.heading, class: 'fit-cover width-100', loading: 'eager', sizes: '(max-width: 991px) 100vw, 50vw', width: section.settings.image.width, height: section.settings.image.height }}
+    {%- else -%}
+      <img alt="High Quality Tech Gadgets - Commerce X Webflow Template" class="fit-cover width-100" loading="eager" sizes="(max-width: 991px) 100vw, 50vw" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6307b79c5af261b6fcc46482_home-v1-hero-image-shopper-webflow-ecommerce-template.jpg" width="1456" height="800" />
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "High-quality tech gadgets & accessories",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Sem sit amet adipiscing ullamcorper adipiscing adipiscing dole convallis tincidunt senectus enim blandit elit egestas.",
+      "label": "Description Text"
+    },
+    {
+      "type": "text",
+      "id": "btn_1_label",
+      "default": "Browse products",
+      "label": "Primary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "btn_1_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "btn_2_label",
+      "default": "About us",
+      "label": "Secondary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "btn_2_link",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Hero"
+    }
+  ]
+}
+{% endschema %}

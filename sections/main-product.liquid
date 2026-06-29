@@ -1,168 +1,193 @@
 {%- comment -%}
-  Main Product Details Section.
+  Webflow-compatible Main Product Details Section.
 {%- endcomment -%}
-<section class="product-single container">
-  <div class="product-single__grid">
+<div class="top-section pd-bottom-130px pd-top-40px">
+  <div class="container-default w-container">
     
-    <!-- Gallery -->
-    <div class="product-gallery">
-      <div class="product-gallery__main">
-        {%- if product.featured_media != blank -%}
-          {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'eager', alt: product.title }}
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        {%- endif -%}
-      </div>
-    </div>
-
-    <!-- Product Info & Purchasing Form -->
-    <div class="product-info">
-      {%- if section.settings.show_vendor and product.vendor != blank -%}
-        <span class="product-info__vendor text-muted">{{ product.vendor }}</span>
+    <!-- Breadcrumbs -->
+    <div class="flex align-center mg-bottom-64px" data-w-id="57ad05f3-b37f-6519-1c1c-47c3caef8903" style="opacity:1">
+      <a class="product-category-link font-size-14px-mbp" href="{{ routes.all_products_collection_url }}">Products</a>
+      <div class="text-400 color-neutral-400 mg-sides-18px">/</div>
+      {%- if product.collections.size > 0 -%}
+        <a class="product-category-link font-size-14px-mbp" href="{{ product.collections.first.url }}">{{ product.collections.first.title | escape }}</a>
+        <div class="text-400 color-neutral-400 mg-sides-18px">/</div>
       {%- endif -%}
+      <div class="product-category-link current-product font-size-14px-mbp">{{ product.title | escape }}</div>
+    </div>
 
-      <h1 class="product-info__title">{{ product.title }}</h1>
-
-      <div class="product-info__price-wrapper">
-        <span class="product-info__price gradient-text" id="ProductPrice-{{ section.id }}">
-          {{ product.selected_or_first_available_variant.price | money }}
-        </span>
-        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-          <span class="product-card__price--compare text-muted" style="font-size: 1.8rem; margin-left: 1.5rem;" id="ComparePrice-{{ section.id }}">
-            {{ product.selected_or_first_available_variant.compare_at_price | money }}
-          </span>
+    <!-- Product Grid layout -->
+    <div class="grid-2-columns _1-11fr---1fr gap-row-80px">
+      
+      <!-- Gallery Column -->
+      <div class="grid-4-columns gap-column-24px" data-w-id="b2454874-6751-3403-c61d-0861abeec098" id="w-node-b2454874-6751-3403-c61d-0861abeec098-641e91f4" style="opacity:1">
+        {%- if product.media.size > 0 -%}
+          <!-- First Media (Featured) -->
+          <a class="sibling-link-item w-inline-block w-lightbox" id="w-node-_5ebcd739-1f70-e20c-d9e2-09bc149c9c0d-641e91f4" href="#">
+            {{ product.featured_media | image_url: width: 800 | image_tag: alt: product.title, class: 'border-radius-56px width-100', loading: 'eager', width: product.featured_media.width, height: product.featured_media.height }}
+          </a>
+          
+          <!-- Loop remaining Media (up to 4 thumbnails) -->
+          {%- for media in product.media offset: 1 limit: 4 -%}
+            <a class="sibling-link-item w-inline-block w-lightbox" href="#">
+              {{ media | image_url: width: 300 | image_tag: alt: product.title, class: 'border-radius-24px border-radius-12px-mbl', loading: 'eager', width: media.width, height: media.height }}
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback mockup images if no product media is present -->
+          <a class="sibling-link-item w-inline-block w-lightbox" href="#">
+            <img alt="Wireless Mouse" class="border-radius-56px width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309270f2bf613293da1ae56_wireless-mouse-product-image-large-shopper-webflow-ecommerce-template.jpg" width="800" height="800" />
+          </a>
         {%- endif -%}
       </div>
 
-      <!-- Add to Cart Form -->
-      {%- form 'product', product, id: 'AddToCartForm', class: 'product-form' -%}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
-        <!-- Option Selectors -->
-        {%- unless product.has_only_default_variant -%}
-          <div class="product-form__variants-wrapper">
-            {%- for option in product.options_with_values -%}
-              <div class="product-form__input">
-                <span class="form__label">{{ option.name }}</span>
-                <div class="product-form__variants">
-                  {%- for value in option.values -%}
-                    {%- liquid
-                      assign is_checked = false
-                      if option.selected_value == value
-                        assign is_checked = true
-                      endif
-                    -%}
-                    <div class="product-form__variant-option">
-                      <input
-                        type="radio"
-                        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                        name="{{ option.name }}"
-                        value="{{ value | escape }}"
-                        {% if is_checked %}checked{% endif %}
-                        data-option-index="{{ option.position | minus: 1 }}"
-                        onchange="handleVariantChange(this)"
-                      >
-                      <label class="product-form__variant-label" for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-                        {{ value }}
-                      </label>
-                    </div>
-                  {%- endfor -%}
-                </div>
+      <!-- Purchasing Details Column -->
+      <div class="inner-container _578px _100-tablet" data-w-id="a8792659-cbfa-040c-d728-ba1acdabaee0" id="w-node-a8792659-cbfa-040c-d728-ba1acdabaee0-641e91f4" style="opacity:1">
+        <h1 class="display-2 mg-bottom-8px">{{ product.title | escape }}</h1>
+        
+        <!-- Short description -->
+        <p class="mg-bottom-24px">{{ product.description | strip_html | truncatewords: 30 }}</p>
+        
+        <!-- Price system -->
+        <div class="mg-bottom-48px">
+          <div class="flex gap-28px children-wrap">
+            <div class="text-400 medium color-neutral-800" id="ProductPrice-{{ section.id }}">
+              {{ product.selected_or_first_available_variant.price | money }}
+            </div>
+            {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+              <div class="text-400 text-strikethrough" id="ComparePrice-{{ section.id }}">
+                {{ product.selected_or_first_available_variant.compare_at_price | money }}
               </div>
-            {%- endfor -%}
-          </div>
-        {%- endunless -%}
-
-        <!-- Quantity & Add to Cart Trigger -->
-        <div class="product-form__actions">
-          <div class="product-form__quantity">
-            <span class="form__label">Quantity</span>
-            <quantity-input class="quantity">
-              <button class="quantity__button" name="minus" type="button">-</button>
-              <input class="quantity__input" type="number" name="quantity" value="1" min="1" aria-label="Quantity">
-              <button class="quantity__button" name="plus" type="button">+</button>
-            </quantity-input>
-          </div>
-
-          <div class="product-form__buttons">
-            <button
-              type="submit"
-              name="add"
-              class="button button--primary button--full-width"
-              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
-            >
-              {%- if product.selected_or_first_available_variant.available -%}
-                Add to Cart
-              {%- else -%}
-                Sold Out
-              {%- endif -%}
-            </button>
+            {%- endif -%}
           </div>
         </div>
-      {%- endform -%}
 
-      <div class="product-single__description">
-        <h3 class="h4">Product Description</h3>
-        <div class="rte text-muted" style="font-size: 1.4rem; line-height: 1.7;">
-          {{ product.description }}
+        <!-- Add to Cart / Buy Now forms -->
+        <div class="mg-bottom-40px">
+          {%- form 'product', product, class: 'mg-bottom-0' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            
+            <div class="flex gap-column-24px mg-bottom-24px">
+              <!-- Quantity Selector -->
+              <input class="input product-quantity-input" min="1" name="quantity" type="number" value="1" style="width: 100px; text-align: center;" />
+              
+              <!-- Variant dropdown -->
+              {%- unless product.has_only_default_variant -%}
+                <div class="width-100">
+                  <select name="id" id="Variant-Selector-{{ section.id }}" class="input color-neutral-600 w-select" onchange="handleVariantChange(this)" style="display: block; width: 100%;">
+                    {%- for variant in product.variants -%}
+                      <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %} {% unless variant.available %}disabled="disabled"{% endunless %}>
+                        {{ variant.title }} - {{ variant.price | money }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+              {%- endunless -%}
+            </div>
+
+            <div class="grid-2-columns">
+              <!-- Submit button -->
+              <input
+                type="submit"
+                value="{% if product.selected_or_first_available_variant.available %}Add to Cart{% else %}Sold Out{% endif %}"
+                class="btn-primary"
+                style="width: 100%; border: none; cursor: pointer;"
+                {% unless product.selected_or_first_available_variant.available %}disabled="disabled"{% endunless %}
+              />
+              
+              <!-- Buy Now -->
+              <button type="submit" name="checkout" class="btn-secondary" style="width: 100%;">Shop now</button>
+            </div>
+          {%- endform -%}
         </div>
+
+        <!-- Details List -->
+        <div>
+          {%- if section.settings.show_brand and product.vendor != blank -%}
+            <div class="grid-2-columns product-page-details">
+              <div class="text-bold">Product Brand</div>
+              <div>{{ product.vendor | escape }}</div>
+            </div>
+            <div class="divider _24px bg-neutral-300"></div>
+          {%- endif -%}
+          
+          {%- if product.metafields.my_fields.size != blank -%}
+            <div class="grid-2-columns product-page-details">
+              <div class="text-bold">Product size</div>
+              <div>{{ product.metafields.my_fields.size }}</div>
+            </div>
+            <div class="divider _24px bg-neutral-300"></div>
+          {%- endif -%}
+          
+          {%- if product.metafields.my_fields.weight != blank -%}
+            <div class="grid-2-columns product-page-details">
+              <div class="text-bold">Product weight</div>
+              <div>{{ product.metafields.my_fields.weight }}</div>
+            </div>
+            <div class="divider _24px bg-neutral-300"></div>
+          {%- endif -%}
+        </div>
+
+        <div class="divider mg-bottom-32px bg-neutral-300"></div>
+
+        <!-- Accepted Payment Methods -->
+        <div class="accepted-payment-methods-container">
+          <div class="line-height-1-333em color-neutral-800 mg-right-16px">Accepted payment methods</div>
+          <div class="grid-3-columns _3-col-mbp gap-14px">
+            <img alt="PayPal" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/631284368bf0c1656fb8ce10_paypal-payment-method-shopper-webflow-ecommerce-template.svg" width="40" height="25" />
+            <img alt="Stripe" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/6312843646c11aee5a21b7d2_stripe-payment-method-shopper-webflow-ecommerce-template.svg" width="40" height="25" />
+            <img alt="Mastercard" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/631284367bab4a4d4f245780_mastercard-payment-method-shopper-webflow-ecommerce-template.svg" width="40" height="25" />
+          </div>
+        </div>
+
       </div>
 
     </div>
-
   </div>
-</section>
+</div>
 
-<!-- Script to handle dynamic variant price updating -->
 <script>
-  const productVariants = {{ product.variants | json }};
+  // Simple JS to update price when variant selector is changed
+  const pdpVariants = {{ product.variants | json }};
   
-  function handleVariantChange(input) {
-    const form = input.closest('form');
+  function handleVariantChange(selectElement) {
+    const selectedId = selectElement.value;
+    const form = selectElement.closest('form');
     if (!form) return;
     
-    // Find all selected options
-    const selectedOptions = Array.from(form.querySelectorAll('.product-form__variants input:checked'))
-      .map(radio => radio.value);
-      
-    // Match the selected variant from variants list
-    const matchedVariant = productVariants.find(variant => {
-      return variant.options.every((opt, index) => opt === selectedOptions[index]);
-    });
+    // Find variant details
+    const variant = pdpVariants.find(v => v.id == selectedId);
+    if (!variant) return;
     
-    const hiddenIdField = form.querySelector('input[name="id"]');
-    const submitBtn = form.querySelector('[type="submit"]');
-    const priceText = document.getElementById(`ProductPrice-{{ section.id }}`);
-    const comparePriceText = document.getElementById(`ComparePrice-{{ section.id }}`);
-
-    if (matchedVariant) {
-      // Update hidden variant ID input
-      if (hiddenIdField) hiddenIdField.value = matchedVariant.id;
-      
-      // Update button status
-      if (submitBtn) {
-        if (matchedVariant.available) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Add to Cart';
-        } else {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Sold Out';
-        }
+    // Update hidden input ID
+    const idInput = form.querySelector('input[name="id"]');
+    if (idInput) idInput.value = variant.id;
+    
+    // Update price fields
+    const priceText = document.getElementById('ProductPrice-{{ section.id }}');
+    const comparePriceText = document.getElementById('ComparePrice-{{ section.id }}');
+    
+    if (priceText) {
+      priceText.innerText = Shopify.formatMoney ? Shopify.formatMoney(variant.price) : '$' + (variant.price / 100).toFixed(2);
+    }
+    
+    if (comparePriceText) {
+      if (variant.compare_at_price > variant.price) {
+        comparePriceText.innerText = Shopify.formatMoney ? Shopify.formatMoney(variant.compare_at_price) : '$' + (variant.compare_at_price / 100).toFixed(2);
+        comparePriceText.style.display = 'block';
+      } else {
+        comparePriceText.style.display = 'none';
       }
-      
-      // Update price text (format cents to local dollars/money formatting)
-      if (priceText) {
-        const formattedPrice = '$' + (matchedVariant.price / 100).toFixed(2);
-        priceText.textContent = formattedPrice;
-      }
-      
-      if (comparePriceText) {
-        if (matchedVariant.compare_at_price && matchedVariant.compare_at_price > matchedVariant.price) {
-          comparePriceText.textContent = '$' + (matchedVariant.compare_at_price / 100).toFixed(2);
-          comparePriceText.style.display = 'inline-block';
-        } else {
-          comparePriceText.style.display = 'none';
-        }
+    }
+    
+    // Update submit button
+    const submitBtn = form.querySelector('input[type="submit"]');
+    if (submitBtn) {
+      if (variant.available) {
+        submitBtn.disabled = false;
+        submitBtn.value = "Add to Cart";
+      } else {
+        submitBtn.disabled = true;
+        submitBtn.value = "Sold Out";
       }
     }
   }
@@ -170,12 +195,12 @@
 
 {% schema %}
 {
-  "name": "Main Product Details",
+  "name": "Webflow Product Details",
   "settings": [
     {
       "type": "checkbox",
-      "id": "show_vendor",
-      "label": "Show Brand/Vendor",
+      "id": "show_brand",
+      "label": "Show Brand (Vendor)",
       "default": true
     }
   ]

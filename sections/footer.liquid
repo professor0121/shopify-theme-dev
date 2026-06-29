@@ -1,82 +1,169 @@
 {%- comment -%}
-  Footer section.
+  Webflow-compatible Footer section.
 {%- endcomment -%}
-<footer class="footer">
-  <div class="container">
-    
-    <div class="footer__grid">
-      <!-- Column 1: Brand Info -->
-      <div class="footer-block">
-        <h3 class="footer-block__heading gradient-text">{{ shop.name }}</h3>
-        <p class="text-muted">{{ section.settings.bio_text }}</p>
+<footer class="footer-wrapper">
+  <div class="container-default w-container">
+    <div class="footer-middle">
+      
+      <!-- Column 1: Brand Info & Social Links -->
+      <div class="inner-container _310px _100-tablet" id="w-node-fec748d1-5181-d919-da60-0a8629b0addc-29b0add9">
+        <a class="footer-logo-wrapper w-inline-block" href="{{ routes.root_url }}">
+          {%- if section.settings.logo_white != blank -%}
+            {{ section.settings.logo_white | image_url: width: 250 | image_tag: alt: shop.name, style: 'max-height: 40px; width: auto;', width: section.settings.logo_white.width, height: section.settings.logo_white.height }}
+          {%- else -%}
+            <img alt="Commerce X Webflow Template - Logo" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/63334c7b4befed7e3ec7c985_logo-white-commerce-webflow-ecommerce-template.svg" width="180" height="40" />
+          {%- endif -%}
+        </a>
+        <p class="color-neutral-400 mg-bottom-32px">
+          {{ section.settings.bio_text | escape }}
+        </p>
+        <div class="social-media-links-container" id="w-node-fec748d1-5181-d919-da60-0a8629b0ade1-29b0add9">
+          {%- if settings.social_facebook_link != blank -%}
+            <a class="social-icon-link w-inline-block" href="{{ settings.social_facebook_link }}" target="_blank">
+              <div class="social-icon-font"></div>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_twitter_link != blank -%}
+            <a class="social-icon-link w-inline-block" href="{{ settings.social_twitter_link }}" target="_blank">
+              <div class="social-icon-font"></div>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_instagram_link != blank -%}
+            <a class="social-icon-link w-inline-block" href="{{ settings.social_instagram_link }}" target="_blank">
+              <div class="social-icon-font"></div>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_youtube_link != blank -%}
+            <a class="social-icon-link w-inline-block" href="{{ settings.social_youtube_link }}" target="_blank">
+              <div class="social-icon-font"></div>
+            </a>
+          {%- endif -%}
+        </div>
+        <div class="divider bg-neutral-600 _48px"></div>
+        <div>
+          <div class="text-200 text-uppercase mg-bottom-24px">
+            <span class="color-neutral-100">Contact us</span>
+          </div>
+          <div class="grid-1-column footer-contact-grid">
+            {%- if section.settings.email != blank -%}
+              <a class="footer-contact-icon w-inline-block" href="mailto:{{ section.settings.email }}">
+                <img alt="Email" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630cdc8d1eac1688631a15ef_email-line-icon-shopper-webflow-ecommerce-template.svg" width="20" height="20" />
+                <div>
+                  <div class="text-200 medium mg-bottom-6px"><span class="color-neutral-100">Email</span></div>
+                  <div class="text-200 color-neutral-400">{{ section.settings.email }}</div>
+                </div>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.phone != blank -%}
+              <a class="footer-contact-icon w-inline-block" href="tel:{{ section.settings.phone }}">
+                <img alt="Phone" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630cdc8cf5e8a329d3673cb7_phone-line-icon-shopper-webflow-ecommerce-template.svg" width="20" height="20" />
+                <div>
+                  <div class="text-200 medium mg-bottom-6px"><span class="color-neutral-100">Phone</span></div>
+                  <div class="text-200 color-neutral-400">{{ section.settings.phone }}</div>
+                </div>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
       </div>
 
-      <!-- Column 2: Quick Links -->
-      <div class="footer-block">
-        <h3 class="footer-block__heading">Quick Links</h3>
-        <ul class="footer-block__details-content">
-          {%- for link in section.settings.menu.links -%}
-            <li>
-              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+      <!-- Column 2: Popular Products (Real Shopify Collection) -->
+      <div id="w-node-_38f7bd07-60d5-4657-1fee-7512d08f88fe-29b0add9">
+        <div class="text-200 text-uppercase footer-title">Popular Products</div>
+        <div class="w-dyn-list">
+          <div class="grid-1-column gap-row-20px w-dyn-items" role="list">
+            {%- assign footer_collection = collections[section.settings.collection] -%}
+            {%- if footer_collection != blank and footer_collection.products.size > 0 -%}
+              {%- for product in footer_collection.products limit: 3 -%}
+                <div class="popular-product-item sibling-link-item" role="listitem">
+                  <a class="grid-2-columns popular-products-grid-link w-inline-block" href="{{ product.url }}">
+                    {%- if product.featured_media -%}
+                      <img alt="{{ product.title | escape }}" class="border-radius-24px" loading="eager" sizes="(max-width: 767px) 80px, 102px" src="{{ product.featured_media | image_url: width: 120 }}" width="102" height="102" />
+                    {%- else -%}
+                      <img alt="Placeholder" class="border-radius-24px" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309223a3c41306686e2cce0_backpack-product-image-large-shopper-webflow-ecommerce-template.jpg" width="102" height="102" />
+                    {%- endif -%}
+                    <div>
+                      <div class="heading-h4-size color-neutral-100 mg-bottom-8px">{{ product.title | escape }}</div>
+                      <div class="color-neutral-400">{{ product.price | money }}</div>
+                    </div>
+                  </a>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <!-- Fallback Webflow mockups if no collection is linked -->
+              <div class="popular-product-item sibling-link-item" role="listitem">
+                <a class="grid-2-columns popular-products-grid-link w-inline-block" href="#">
+                  <img alt="Backpack" class="border-radius-24px" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309223a3c41306686e2cce0_backpack-product-image-large-shopper-webflow-ecommerce-template.jpg" width="102" height="102" />
+                  <div>
+                    <div class="heading-h4-size color-neutral-100 mg-bottom-8px">Backpack</div>
+                    <div class="color-neutral-400">$ 39.99 USD</div>
+                  </div>
+                </a>
+              </div>
+              <div class="popular-product-item sibling-link-item" role="listitem">
+                <a class="grid-2-columns popular-products-grid-link w-inline-block" href="#">
+                  <img alt="Wireless Keyboard" class="border-radius-24px" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309209c808ef44bf78bab82_wireless-keyboard-product-image-large-shopper-webflow-ecommerce-template.jpg" width="102" height="102" />
+                  <div>
+                    <div class="heading-h4-size color-neutral-100 mg-bottom-8px">Wireless Keyboard</div>
+                    <div class="color-neutral-400">$ 49.99 USD</div>
+                  </div>
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3: Navigation Menu -->
+      <div id="w-node-fec748d1-5181-d919-da60-0a8629b0ae15-29b0add9">
+        <div class="text-200 text-uppercase footer-title">Menu</div>
+        <div class="grid-2-columns footer-menu-pages-grid">
+          <ul class="footer-list-wrapper" role="list">
+            {%- for link in section.settings.menu.links -%}
+              <li class="footer-list-item">
+                <a class="footer-link" href="{{ link.url }}">{{ link.title | escape }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Column 4: Utility Pages Links -->
+      <div id="w-node-fec748d1-5181-d919-da60-0a8629b0ae51-29b0add9">
+        <div class="text-200 text-uppercase footer-title">Utility Pages</div>
+        <ul class="footer-list-wrapper" role="list">
+          {%- for link in section.settings.utility_menu.links -%}
+            <li class="footer-list-item">
+              <a class="footer-link" href="{{ link.url }}">{{ link.title | escape }}</a>
             </li>
           {%- endfor -%}
+          {%- if section.settings.show_builder_link -%}
+            <li class="footer-list-item">
+              <a class="link-wrapper link-underline text-break-no-wrap w-inline-block" href="https://brixtemplates.com/more-webflow-templates" target="_blank">
+                <div class="text-200 medium color-neutral-100">
+                  <div class="link-text">More Webflow Templates</div>
+                  <div class="line-rounded-icon link-icon-right"></div>
+                </div>
+                <div class="link-underline-wrapper bg-neutral-600">
+                  <div class="link-underline-inside bg-neutral-100"></div>
+                </div>
+              </a>
+            </li>
+          {%- endif -%}
         </ul>
       </div>
 
-      <!-- Column 3: Newsletter Sign-up -->
-      <div class="footer-block">
-        <h3 class="footer-block__heading">Stay Connected</h3>
-        <p class="text-muted">Sign up to receive the latest updates, promotions, and product arrivals.</p>
-        
-        {%- form 'customer', class: 'footer__newsletter-form' -%}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <input
-            id="NewsletterForm--{{ section.id }}"
-            type="email"
-            name="contact[email]"
-            class="footer__newsletter-input"
-            value="{{ form.email }}"
-            aria-required="true"
-            autocorrect="off"
-            autocapitalize="off"
-            autocomplete="email"
-            {% if form.errors %}
-              autofocus
-              aria-invalid="true"
-              aria-describedby="Newsletter-error--{{ section.id }}"
-            {% elsif form.posted_successfully? %}
-              aria-describedby="Newsletter-success--{{ section.id }}"
-            {% endif %}
-            placeholder="your-email@example.com"
-            required
-          >
-          <button type="submit" class="button button--primary" name="commit" id="Subscribe--{{ section.id }}">
-            Subscribe
-          </button>
-        {%- endform -%}
-      </div>
     </div>
 
-    <!-- Bottom Footer (Socials & Copyright) -->
-    <div class="footer__bottom">
-      <p class="text-muted">&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url }}. All rights reserved.</p>
-      
-      <div class="footer__social-icons">
-        {%- if settings.social_twitter_link != blank -%}
-          <a href="{{ settings.social_twitter_link }}" target="_blank" aria-label="Twitter">
-            {% render 'icon-twitter' %}
-          </a>
-        {%- endif -%}
-        {%- if settings.social_instagram_link != blank -%}
-          <a href="{{ settings.social_instagram_link }}" target="_blank" aria-label="Instagram">
-            {% render 'icon-instagram' %}
-          </a>
-        {%- endif -%}
-        {%- if settings.social_youtube_link != blank -%}
-          <a href="{{ settings.social_youtube_link }}" target="_blank" aria-label="YouTube">
-            {% render 'icon-youtube' %}
-          </a>
-        {%- endif -%}
+    <!-- Bottom Footer (Copyright & Payment Badges) -->
+    <div class="footer-bottom">
+      <p class="color-neutral-400 mg-bottom-0">
+        {{ section.settings.copyright_text }}
+      </p>
+      <div class="flex align-center gap-24px" id="w-node-fec748d1-5181-d919-da60-0a8629b0ae78-29b0add9">
+        <img alt="PayPal" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630cecd12ef3f09e4e52fbfe_paypal-footer-icon-shopper-webflow-ecommerce-template.svg" width="40" height="25" />
+        <img alt="Stripe" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630cecd11fc37f88eb02d632_stripe-footer-icon-shopper-webflow-ecommerce-template.svg" width="40" height="25" />
+        <img alt="Mastercard" loading="eager" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630cecd11fc37f3d6f02d637_mastercard-footer-icon-shopper-webflow-ecommerce-template.svg" width="40" height="25" />
       </div>
     </div>
 
@@ -85,19 +172,58 @@
 
 {% schema %}
 {
-  "name": "Footer",
+  "name": "Webflow Footer",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_white",
+      "label": "White Logo Image"
+    },
     {
       "type": "textarea",
       "id": "bio_text",
-      "default": "Lumina is a premium eCommerce experience designed for high conversions and fluid accessibility.",
+      "default": "Commerce X is our ultimate Multi Layout Ecommerce Webflow Template designed for modern brands.",
       "label": "Brand Description"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "default": "contact@commerce.com",
+      "label": "Contact Email"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "default": "(414) 687 - 5892",
+      "label": "Contact Phone"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Footer Collection (Popular Products)"
     },
     {
       "type": "link_list",
       "id": "menu",
       "default": "footer",
-      "label": "Footer Menu"
+      "label": "Footer Navigation Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "utility_menu",
+      "label": "Utility Navigation Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_builder_link",
+      "default": true,
+      "label": "Show 'More Webflow Templates' Link"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "default": "Copyright © Commerce X | Designed by BRIX Templates - Powered by Shopify",
+      "label": "Copyright Text"
     }
   ]
 }

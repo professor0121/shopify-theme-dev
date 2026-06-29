@@ -1,0 +1,224 @@
+{%- comment -%}
+  Webflow-compatible Product Recommendation Slider.
+{%- endcomment -%}
+<div class="section overflow-hidden">
+  <div class="container-default w-container">
+    
+    <!-- Slider Header -->
+    <div class="grid-2-columns mg-bottom-40px">
+      <h2 class="display-3 mg-bottom-0" data-w-id="ec791736-38fe-ff02-1eec-c8195fa2b4e9" id="w-node-ec791736-38fe-ff02-1eec-c8195fa2b4e9-701f600c" style="opacity:1">
+        {{ section.settings.heading | escape }}
+      </h2>
+      {%- if section.settings.view_all_link != blank -%}
+        <a class="link-wrapper link-underline w-inline-block" data-w-id="1134bcd8-547e-ae46-be42-2ff8f96d5f84" href="{{ section.settings.view_all_link }}" id="w-node-_1134bcd8-547e-ae46-be42-2ff8f96d5f84-701f600c" style="opacity:1">
+          <div class="text-300">{{ section.settings.view_all_label | escape }}</div>
+          <div class="link-underline-wrapper height-1-5px">
+            <div class="link-underline-inside height-1-5px"></div>
+          </div>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- Webflow Slider Core Wrapper -->
+    <div class="slider-wrapper w-slider" data-animation="slide" data-autoplay="false" data-autoplay-limit="0" data-delay="4000" data-disable-swipe="false" data-duration="500" data-easing="ease" data-hide-arrows="false" data-infinite="false" data-nav-spacing="3" data-w-id="a8b35c7c-baea-e46d-7ab7-e887bc620ba8" style="opacity:1">
+      <div class="slider-mask width-304px w-slider-mask">
+        
+        {%- assign slider_collection = collections[section.settings.collection] -%}
+        {%- if slider_collection != blank and slider_collection.products.size > 0 -%}
+          {%- assign products_count = slider_collection.products.size -%}
+          {%- for i in (0..7) -%}
+            {%- assign product_index = i | modulo: products_count -%}
+            {%- assign product = slider_collection.products[product_index] -%}
+            <div class="slide-item-mg mg-right-64px w-slide">
+              <div class="w-dyn-list">
+                <div class="w-dyn-items" role="list">
+                  <div class="children-perspective-1000px w-dyn-item" role="listitem">
+                    <a class="product-slider-item w-inline-block" href="{{ product.url }}">
+                      <div class="link-item-image-container border-radius-44px mg-bottom-32px">
+                        {%- if product.featured_media -%}
+                          {{ product.featured_media | image_url: width: 400 | image_tag: alt: product.title, class: 'width-100', loading: 'lazy', width: product.featured_media.width, height: product.featured_media.height }}
+                        {%- else -%}
+                          <img alt="Placeholder" class="width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092021c6f5ef9ba1205ae5_vr-headset-product-image-large-shopper-webflow-ecommerce-template.jpg" width="304" height="304" />
+                        {%- endif -%}
+                        <div class="badge-secondary small products-badge-top-left">
+                          {{ product.type | default: "Gadgets" }}
+                        </div>
+                      </div>
+                      <h3 class="heading-h4-size mg-bottom-10px">{{ product.title | escape }}</h3>
+                      <p class="color-neutral-500 mg-bottom-32px">
+                        {{ product.description | strip_html | truncatewords: 8 }}
+                      </p>
+                      <div class="text-200 medium color-neutral-800">
+                        {{ product.price | money }}
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Placeholder Slide Items -->
+          <div class="slide-item-mg mg-right-64px w-slide">
+            <div class="w-dyn-list">
+              <div class="w-dyn-items" role="list">
+                <div class="children-perspective-1000px w-dyn-item" role="listitem">
+                  <a class="product-slider-item w-inline-block" href="#">
+                    <div class="link-item-image-container border-radius-44px mg-bottom-32px">
+                      <img alt="VR Headset" class="width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/63092021c6f5ef9ba1205ae5_vr-headset-product-image-large-shopper-webflow-ecommerce-template.jpg" width="304" height="304" />
+                      <div class="badge-secondary small products-badge-top-left">Technology</div>
+                    </div>
+                    <h3 class="heading-h4-size mg-bottom-10px">VR Headset</h3>
+                    <p class="color-neutral-500 mg-bottom-32px">Lorem ipsum dolor sit amet dolor sit consectetur adipiscing elit elit.</p>
+                    <div class="text-200 medium color-neutral-800">$ 579.99 USD</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-item-mg mg-right-64px w-slide">
+            <div class="w-dyn-list">
+              <div class="w-dyn-items" role="list">
+                <div class="children-perspective-1000px w-dyn-item" role="listitem">
+                  <a class="product-slider-item w-inline-block" href="#">
+                    <div class="link-item-image-container border-radius-44px mg-bottom-32px">
+                      <img alt="Wireless Keyboard" class="width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309209c808ef44bf78bab82_wireless-keyboard-product-image-large-shopper-webflow-ecommerce-template.jpg" width="304" height="304" />
+                      <div class="badge-secondary small products-badge-top-left">Technology</div>
+                    </div>
+                    <h3 class="heading-h4-size mg-bottom-10px">Wireless Keyboard</h3>
+                    <p class="color-neutral-500 mg-bottom-32px">Lorem ipsum dolor sit amet dolor sit consectetur adipiscing elit elit.</p>
+                    <div class="text-200 medium color-neutral-800">$ 49.99 USD</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-item-mg mg-right-64px w-slide">
+            <div class="w-dyn-list">
+              <div class="w-dyn-items" role="list">
+                <div class="children-perspective-1000px w-dyn-item" role="listitem">
+                  <a class="product-slider-item w-inline-block" href="#">
+                    <div class="link-item-image-container border-radius-44px mg-bottom-32px">
+                      <img alt="Backpack" class="width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309223a3c41306686e2cce0_backpack-product-image-large-shopper-webflow-ecommerce-template.jpg" width="304" height="304" />
+                      <div class="badge-secondary small products-badge-top-left">Gear</div>
+                    </div>
+                    <h3 class="heading-h4-size mg-bottom-10px">Backpack</h3>
+                    <p class="color-neutral-500 mg-bottom-32px">Lorem ipsum dolor sit amet dolor sit consectetur adipiscing elit elit.</p>
+                    <div class="text-200 medium color-neutral-800">$ 39.99 USD</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-item-mg mg-right-64px w-slide">
+            <div class="w-dyn-list">
+              <div class="w-dyn-items" role="list">
+                <div class="children-perspective-1000px w-dyn-item" role="listitem">
+                  <a class="product-slider-item w-inline-block" href="#">
+                    <div class="link-item-image-container border-radius-44px mg-bottom-32px">
+                      <img alt="iPhone Case" class="width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552de1e91e2/6309234265112f640b533d9b_iphone-case-product-image-large-shopper-webflow-ecommerce-template.jpg" width="304" height="304" />
+                      <div class="badge-secondary small products-badge-top-left">Gear</div>
+                    </div>
+                    <h3 class="heading-h4-size mg-bottom-10px">iPhone Case</h3>
+                    <p class="color-neutral-500 mg-bottom-32px">Lorem ipsum dolor sit amet dolor sit consectetur adipiscing elit elit.</p>
+                    <div class="text-200 medium color-neutral-800">$ 29.99 USD</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+      </div>
+
+      <!-- Arrow Controls -->
+      <div class="button-arrow-white-75 top-148px w-slider-arrow-left">
+        <div></div>
+      </div>
+      <div class="button-arrow-white-75 top-148px w-slider-arrow-right">
+        <div></div>
+      </div>
+      <div class="hidden-on-desktop w-slider-nav w-round"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wait for jQuery and Webflow to be loaded
+    const checkExist = setInterval(function() {
+      if (window.jQuery && window.Webflow) {
+        clearInterval(checkExist);
+        
+        const $ = window.jQuery;
+        const $slider = $('.slider-wrapper.w-slider');
+        
+        if ($slider.length) {
+          // Listen for clicks on the right arrow
+          $('.w-slider-arrow-right').on('click', function(e) {
+            const $dots = $slider.find('.w-slider-nav .w-dot');
+            const total = $dots.length;
+            if (total <= 1) return;
+            
+            const activeIndex = $slider.find('.w-slider-nav .w-active').index();
+            if (activeIndex === total - 1) {
+              e.stopPropagation();
+              e.preventDefault();
+              $dots.first().trigger('click');
+            }
+          });
+          
+          // Listen for clicks on the left arrow
+          $('.w-slider-arrow-left').on('click', function(e) {
+            const $dots = $slider.find('.w-slider-nav .w-dot');
+            const total = $dots.length;
+            if (total <= 1) return;
+            
+            const activeIndex = $slider.find('.w-slider-nav .w-active').index();
+            if (activeIndex === 0) {
+              e.stopPropagation();
+              e.preventDefault();
+              $dots.last().trigger('click');
+            }
+          });
+        }
+      }
+    }, 100);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Webflow Product Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Featured Products",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "default": "Browse all products",
+      "label": "View All Label"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Slider Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Product Slider"
+    }
+  ]
+}
+{% endschema %}

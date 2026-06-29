@@ -1,0 +1,77 @@
+{%- comment -%}
+  Webflow-compatible split CTA card section.
+{%- endcomment -%}
+<div class="section">
+  <div class="container-default w-container">
+    <div class="cta-card" data-w-id="e015cf7e-32d9-e05d-6fc6-3714e2a43a8c" style="opacity:1">
+      
+      <!-- Text & Buttons Column -->
+      <div class="position-relative---z-index-1" data-w-id="e015cf7e-32d9-e05d-6fc6-3714e2a43a8d" id="w-node-e015cf7e-32d9-e05d-6fc6-3714e2a43a8d-701f600c" style="opacity:1">
+        <div class="inner-container _496px _100-mbl" id="w-node-e015cf7e-32d9-e05d-6fc6-3714e2a43a8e-701f600c">
+          <h2 class="display-3 color-neutral-100">
+            {{ section.settings.heading | escape }}
+          </h2>
+          <p class="color-neutral-300 mg-bottom-32px">
+            {{ section.settings.text | escape }}
+          </p>
+          {%- if section.settings.btn_label != blank -%}
+            <a class="btn-primary white w-button" href="{{ section.settings.btn_link }}">
+              {{ section.settings.btn_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Image Column -->
+      <div class="cta-image-right-wrapper" data-w-id="e015cf7e-32d9-e05d-6fc6-3714e2a43a95" style="opacity:1">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 700 | image_tag: alt: section.settings.heading, class: 'width-100', loading: 'lazy', sizes: '(max-width: 479px) 99vw, (max-width: 767px) 84vw, (max-width: 1439px) 51vw, 700px', width: section.settings.image.width, height: section.settings.image.height }}
+        {%- else -%}
+          <img alt="Why Are We Different - Commerce X Webflow Template" class="width-100" loading="lazy" sizes="(max-width: 479px) 99vw, (max-width: 767px) 84vw, (max-width: 1439px) 51vw, 700px" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/63090fbe1d162e49bf5cd3b6_cta-image-right-shopper-webflow-ecommerce-template.jpg" width="700" height="500" />
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow CTA Card",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Why are we different?",
+      "label": "CTA Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit arcu mollis tortor velit facilisis diam vel posuere ullamcorper.",
+      "label": "CTA Text"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "default": "About us",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "CTA Banner Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow CTA Card"
+    }
+  ]
+}
+{% endschema %}
