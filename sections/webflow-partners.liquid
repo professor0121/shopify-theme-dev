@@ -1,0 +1,124 @@
+{%- comment -%}
+  Webflow-compatible Partner Logo Strip Section.
+{%- endcomment -%}
+<div class="section bg-neutral-200">
+  <div class="container-default w-container">
+    <h2 class="display-3 text-center mg-bottom-40px" data-w-id="9816431c-d138-5306-4325-6337c070358b" style="opacity:0">
+      {{ section.settings.heading | escape }}
+    </h2>
+    <div class="w-layout-grid grid-6-columns logo-strip">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- capture partner_w_id -%}
+            {%- cycle '403d583d-e940-88a6-0059-5663749dd6e2', '403d583d-e940-88a6-0059-5663749dd6e3', '403d583d-e940-88a6-0059-5663749dd6e4', '403d583d-e940-88a6-0059-5663749dd6e5', '403d583d-e940-88a6-0059-5663749dd6e6', '403d583d-e940-88a6-0059-5663749dd6e7' -%}
+          {%- endcapture -%}
+          {%- if block.settings.logo_image != blank -%}
+            {{ block.settings.logo_image | image_url: width: 300 | image_tag: alt: block.settings.title, loading: 'lazy', data-w-id: partner_w_id, style: 'opacity:0' }}
+          {%- else -%}
+            <img alt="{{ block.settings.title | escape }}" data-w-id="{{ partner_w_id | strip }}" src="{{ block.settings.logo_url | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569d2ae29790ffe0bbe_google-logo-dark-shopper-webflow-ecommerce-template.svg' }}" width="150" height="40" style="opacity:0" />
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback Logos -->
+        {%- for i in (1..6) -%}
+          {%- capture mock_title -%}{%- cycle 'Google', 'Facebook', 'YouTube', 'Pinterest', 'Twitch', 'Webflow' -%}{%- endcapture -%}
+          {%- capture mock_logo -%}
+            {%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569d2ae29790ffe0bbe_google-logo-dark-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e85690416bfdb798d3754_facebook-logo-dark-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569e248122179c795fc_youtube-logo-dark-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569c07692a651354f38_pinterest-logo-dark-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569b24d39a4324953a1_twitch-logo-dark-shopper-webflow-ecommerce-template.svg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e85693a62608400a69ff3_webflow-logo-dark-shopper-webflow-ecommerce-template.svg' -%}
+          {%- endcapture -%}
+          {%- capture mock_w_id -%}
+            {%- cycle '403d583d-e940-88a6-0059-5663749dd6e2', '403d583d-e940-88a6-0059-5663749dd6e3', '403d583d-e940-88a6-0059-5663749dd6e4', '403d583d-e940-88a6-0059-5663749dd6e5', '403d583d-e940-88a6-0059-5663749dd6e6', '403d583d-e940-88a6-0059-5663749dd6e7' -%}
+          {%- endcapture -%}
+          <img alt="{{ mock_title }}" data-w-id="{{ mock_w_id | strip }}" src="{{ mock_logo }}" width="150" height="40" style="opacity:0" />
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Partners Logos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Our partners",
+      "label": "Heading"
+    }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "partner_logo",
+      "name": "Partner Logo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Google",
+          "label": "Partner Name"
+        },
+        {
+          "type": "text",
+          "id": "logo_url",
+          "label": "Static SVG Logo URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image upload"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Partners Logos",
+      "blocks": [
+        {
+          "type": "partner_logo",
+          "settings": {
+            "title": "Google",
+            "logo_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569d2ae29790ffe0bbe_google-logo-dark-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "partner_logo",
+          "settings": {
+            "title": "Facebook",
+            "logo_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e85690416bfdb798d3754_facebook-logo-dark-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "partner_logo",
+          "settings": {
+            "title": "YouTube",
+            "logo_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569e248122179c795fc_youtube-logo-dark-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "partner_logo",
+          "settings": {
+            "title": "Pinterest",
+            "logo_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569c07692a651354f38_pinterest-logo-dark-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "partner_logo",
+          "settings": {
+            "title": "Twitch",
+            "logo_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8569b24d39a4324953a1_twitch-logo-dark-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "partner_logo",
+          "settings": {
+            "title": "Webflow",
+            "logo_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e85693a62608400a69ff3_webflow-logo-dark-shopper-webflow-ecommerce-template.svg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

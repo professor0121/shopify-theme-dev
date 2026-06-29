@@ -5,7 +5,10 @@
   <div class="container-default w-container">
     <div class="stats-container">
       {%- for block in section.blocks -%}
-        <div class="text-center" {{ block.shopify_attributes }}>
+        {%- capture stat_w_id -%}
+          {%- cycle '7dc5f9a9-5903-7ed9-8422-f0fc92dc6940', 'd3cd8392-6876-0a70-df4c-df390f606c90', 'c921c7e0-0596-f0f1-1a57-7c5404e48a8b', 'dd0f49b1-370b-453c-7d07-a2dd073f0834', '302759a8-9544-bf9e-77a1-a6d5ed73683c' -%}
+        {%- endcapture -%}
+        <div class="text-center" data-w-id="{{ stat_w_id | strip }}" style="opacity:0" {{ block.shopify_attributes }}>
           <div class="display-1 mg-bottom-20px">{{ block.settings.stat_value | escape }}</div>
           <div class="text-300">{{ block.settings.stat_label | escape }}</div>
         </div>

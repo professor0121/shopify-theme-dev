@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "about_intro": {
+      "type": "webflow-about-intro",
+      "settings": {
+        "heading": "About our products",
+        "text": "Lorem ipsum dolor sit amet consectetur adipiscing elit montes id odio feugiat dignissim aliquet quam viverra nulla sed mauris tortor tempor elit sapien egestas curabitur non dictum feugiat."
+      }
+    },
+    "about_stats": {
+      "type": "webflow-about-stats",
+      "settings": {}
+    },
+    "about_full_image": {
+      "type": "webflow-about-full-image",
+      "settings": {}
+    },
+    "about_values": {
+      "type": "webflow-about-values",
+      "settings": {
+        "heading": "Our values",
+        "text": "Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar dolor sime elementum tempus hac tellus."
+      }
+    },
+    "about_feature": {
+      "type": "webflow-about-feature",
+      "settings": {
+        "heading": "Care and love for creating high quality design",
+        "text_1": "Lorem ipsum dolor sit amet consectetur adipiscing elit montes id odio feugiat dignissim aliquet quam viverra nulla sed mauris tortor tempor elit sapien egestas curabitur non dictum feugiat.",
+        "text_2": "Lorem ipsum dolor sit amet consectetur adipiscing elit montes id odio feugiat dignissim aliquet quam viverra nulla sed mauris tortor tempor elit sapien egestas curabitur non dictum feugiat.",
+        "btn_label": "Browse products"
+      }
+    },
+    "partners_logos": {
+      "type": "webflow-partners",
+      "settings": {
+        "heading": "Our partners"
+      }
+    },
+    "instagram_grid": {
+      "type": "webflow-instagram",
+      "settings": {
+        "heading": "Follow us on Instagram",
+        "btn_label": "Follow us"
+      }
+    }
+  },
+  "order": [
+    "about_intro",
+    "about_stats",
+    "about_full_image",
+    "about_values",
+    "about_feature",
+    "partners_logos",
+    "instagram_grid"
+  ]
+}

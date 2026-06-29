@@ -1,0 +1,102 @@
+{%- comment -%}
+  Webflow-compatible About Intro & Gallery Section.
+{%- endcomment -%}
+<div class="top-section">
+  <div class="container-default w-container">
+    <div class="text-center mg-bottom-72px">
+      <div class="inner-container _718px center">
+        <h1 class="display-2" data-w-id="d02ac82d-d7fd-c3b3-611d-cf01eda4a538" style="opacity:0">
+          {{ section.settings.heading | escape }}
+        </h1>
+        <p class="mg-bottom-0" data-w-id="7eeaf21f-d1bf-336c-19a4-84f86e53afc9" style="opacity:0">
+          {{ section.settings.text | escape }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {%- liquid
+    assign images_src = "" | split: ","
+    if section.settings.collection != blank and collections[section.settings.collection].products.size > 0
+      assign collection_products = collections[section.settings.collection].products
+      for prod in collection_products limit: 12
+        if prod.featured_media != blank
+          assign img_url = prod.featured_media | image_url: width: 800
+          assign images_src = images_src | append: img_url | append: ","
+        endif
+      endfor
+      assign images_src = images_src | split: ","
+    endif
+  -%}
+
+  <!-- Scroll Gallery Grid -->
+  <div class="product-gallery-full-width">
+    <!-- Col 1 -->
+    <div class="product-gallery-full-width---item mg-top-80px" data-w-id="3b250493-4152-9837-2590-ecc6246fe373" style="opacity:0">
+      <img alt="Gallery Image 1" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[0] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e890526a4091e9841e137_wireless-mouse-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+      <img alt="Gallery Image 2" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[1] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8904cd34edcefd4140ee_power-bank-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+    </div>
+
+    <!-- Col 2 -->
+    <div class="product-gallery-full-width---item" data-w-id="74d13446-ea2c-8905-ca93-5e893645b132" style="opacity:0">
+      <img alt="Gallery Image 3" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[2] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8904dcd2d77484564fc5_drone-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+      <img alt="Gallery Image 4" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[3] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e89051791dd8643258a1a_earphones-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+    </div>
+
+    <!-- Col 3 -->
+    <div class="product-gallery-full-width---item mg-top-80px" data-w-id="94b82db3-9ac0-d857-2c5c-e6e28033a9f8" style="opacity:0">
+      <img alt="Gallery Image 5" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[4] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8905455170097a097499_smart-speaker-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+      <img alt="Gallery Image 6" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[5] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8905e819678009609496_backpack-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+    </div>
+
+    <!-- Col 4 -->
+    <div class="product-gallery-full-width---item" data-w-id="8cc7cd41-d925-6b1f-46ed-997a6407fb0e" style="opacity:0">
+      <img alt="Gallery Image 7" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[6] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e89056bb9b5185b12bab4_smartwatch-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+      <img alt="Gallery Image 8" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[7] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e890440b482bfc9616325_airpods-case-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+    </div>
+
+    <!-- Col 5 -->
+    <div class="product-gallery-full-width---item mg-top-80px hidden-on-mbp" data-w-id="33cbb232-b3fb-6a61-3de5-b14732bff109" style="opacity:0">
+      <img alt="Gallery Image 9" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[8] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8904c7afbc0b09bda492_tablet-keyboard-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+      <img alt="Gallery Image 10" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[9] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8905d2ae2963dcfe3b9e_water-bottle-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+    </div>
+
+    <!-- Col 6 -->
+    <div class="product-gallery-full-width---item hidden-on-mbp" data-w-id="8658d362-90e7-3001-f6c4-af250633372f" style="opacity:0">
+      <img alt="Gallery Image 11" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[10] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e8be53a62608d2da6e669_headphones-2-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+      <img alt="Gallery Image 12" class="border-radius-40px border-radius-24px-tablet" loading="eager" src="{{ images_src[11] | default: 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e89040416bfa5698d676d_vr-headset-product-image-large-shopper-webflow-ecommerce-template.jpg' }}" width="300" height="300" />
+    </div>
+    
+    <div class="product-gallery-full-width---gradient"></div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow About Intro",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "About our products",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit montes id odio feugiat dignissim aliquet quam viverra nulla sed mauris tortor tempor elit sapien egestas curabitur non dictum feugiat.",
+      "label": "Description Text"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Pull images from Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow About Intro"
+    }
+  ]
+}
+{% endschema %}

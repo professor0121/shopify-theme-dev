@@ -1,0 +1,103 @@
+{%- comment -%}
+  Webflow-compatible Instagram Photo Grid Section.
+{%- endcomment -%}
+<div class="section pd-bottom-200px">
+  <div class="container-default w-container">
+    
+    <!-- Title -->
+    <h2 class="display-3 text-center mg-bottom-40px" data-w-id="11d44bf9-a12c-12ab-0576-93480702c6a3" style="opacity:1">
+      {{ section.settings.heading | escape }}
+    </h2>
+
+    <!-- Photo Grid -->
+    <div class="mg-bottom-48px">
+      <div class="grid-4-columns gap-16px-mbp children-perspective-1000px" style="grid-template-columns: repeat(5, 1fr);">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- capture block_w_id -%}
+              {%- cycle '11d44bf9-a12c-12ab-0576-93480702c6a7', '11d44bf9-a12c-12ab-0576-93480702c6a9', '11d44bf9-a12c-12ab-0576-93480702c6ab', '11d44bf9-a12c-12ab-0576-93480702c6ad', '11d44bf9-a12c-12ab-0576-93480702c6af' -%}
+            {%- endcapture -%}
+            <a class="instagram-image-link-container w-inline-block" data-w-id="{{ block_w_id | strip }}" href="{{ block.settings.link_url | default: section.settings.account_url }}" target="_blank" style="opacity:1">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 600 | image_tag: alt: 'Instagram Photo', class: 'width-100', loading: 'lazy', sizes: '(max-width: 479px) 93vw, (max-width: 991px) 46vw, (max-width: 1439px) 22vw, 304px', width: block.settings.image.width, height: block.settings.image.height }}
+              {%- else -%}
+                <img alt="Instagram Photo" class="width-100" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630d381d139091d40ad244af_instagram-link-image-1-shopper-webflow-ecommerce-template.jpg" width="304" height="304" />
+              {%- endif -%}
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback Photos -->
+          {%- for i in (1..5) -%}
+            {%- capture mock_w_id -%}
+              {%- cycle '11d44bf9-a12c-12ab-0576-93480702c6a7', '11d44bf9-a12c-12ab-0576-93480702c6a9', '11d44bf9-a12c-12ab-0576-93480702c6ab', '11d44bf9-a12c-12ab-0576-93480702c6ad', '11d44bf9-a12c-12ab-0576-93480702c6af' -%}
+            {%- endcapture -%}
+            {%- capture mock_img -%}
+              {%- cycle 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630d381d139091d40ad244af_instagram-link-image-1-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630d381d1390915a13d244b4_instagram-link-image-2-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630d381c3acada1bdffeb8ac_instagram-link-image-3-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630d381d727a9f6fef7a603e_instagram-link-image-4-shopper-webflow-ecommerce-template.jpg', 'https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630d381d134c38871da49d59_instagram-link-image-5-shopper-webflow-ecommerce-template.jpg' -%}
+            {%- endcapture -%}
+            <a class="instagram-image-link-container w-inline-block" data-w-id="{{ mock_w_id | strip }}" href="{{ section.settings.account_url }}" target="_blank" style="opacity:1">
+              <img alt="Instagram Photo" class="width-100" src="{{ mock_img }}" width="304" height="304" />
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Follow Button -->
+    <div class="flex-horizontal" data-w-id="11d44bf9-a12c-12ab-0576-93480702c6b1" style="opacity:1">
+      <a class="btn-primary w-button" data-w-id="11d44bf9-a12c-12ab-0576-93480702c6b2" href="{{ section.settings.account_url }}" target="_blank">
+        {{ section.settings.btn_label | escape }}
+        <span class="line-rounded-icon link-icon-right"></span>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Instagram Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Follow us on Instagram",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "default": "Follow us",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "account_url",
+      "label": "Instagram Profile URL"
+    }
+  ],
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "instagram_photo",
+      "name": "Instagram Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Specific Photo Link (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Instagram Grid"
+    }
+  ]
+}
+{% endschema %}

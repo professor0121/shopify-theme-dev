@@ -8,7 +8,12 @@
       <!-- Left side Navigation Menu (Desktop) -->
       <div class="header-right-side hidden-on-tablet">
         <ul class="header-nav-menu-list" role="list">
+          {%- assign has_about = false -%}
           {%- for link in section.settings.menu.links -%}
+            {%- assign down_title = link.title | downcase -%}
+            {%- if down_title contains 'about' -%}
+              {%- assign has_about = true -%}
+            {%- endif -%}
             {%- if link.links != blank -%}
               <li class="header-nav-list-item left">
                 <div class="dropdown-wrapper w-dropdown" data-delay="0" data-hover="true">
@@ -35,6 +40,11 @@
               </li>
             {%- endif -%}
           {%- endfor -%}
+          {%- unless has_about -%}
+            <li class="header-nav-list-item left">
+              <a class="header-nav-link w-nav-link" href="/pages/about">About</a>
+            </li>
+          {%- endunless -%}
         </ul>
       </div>
 
@@ -54,7 +64,12 @@
         <!-- Navigation Menu for Mobile (Tablet and down) -->
         <nav class="header-nav-menu-wrapper w-nav-menu" role="navigation">
           <ul class="header-nav-menu-list" role="list">
+            {%- assign has_about_mobile = false -%}
             {%- for link in section.settings.menu.links -%}
+              {%- assign down_title = link.title | downcase -%}
+              {%- if down_title contains 'about' -%}
+                {%- assign has_about_mobile = true -%}
+              {%- endif -%}
               {%- if link.links != blank -%}
                 <li class="header-nav-list-item left show-in-tablet">
                   <div class="dropdown-wrapper w-dropdown" data-delay="0" data-hover="true">
@@ -81,6 +96,11 @@
                 </li>
               {%- endif -%}
             {%- endfor -%}
+            {%- unless has_about_mobile -%}
+              <li class="header-nav-list-item left show-in-tablet">
+                <a class="header-nav-link w-nav-link" href="/pages/about">About</a>
+              </li>
+            {%- endunless -%}
           </ul>
         </nav>
 

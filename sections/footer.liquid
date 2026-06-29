@@ -119,10 +119,25 @@
         <div class="text-200 text-uppercase footer-title">Menu</div>
         <div class="grid-2-columns footer-menu-pages-grid">
           <ul class="footer-list-wrapper" role="list">
+            <li class="footer-list-item">
+              <a class="footer-link" href="/">Home</a>
+            </li>
+            <li class="footer-list-item">
+              <a class="footer-link" href="/pages/about">About</a>
+            </li>
+            <li class="footer-list-item">
+              <a class="footer-link" href="/pages/contact">Contact</a>
+            </li>
+            <li class="footer-list-item">
+              <a class="footer-link" href="/collections/all">All Products</a>
+            </li>
             {%- for link in section.settings.menu.links -%}
-              <li class="footer-list-item">
-                <a class="footer-link" href="{{ link.url }}">{{ link.title | escape }}</a>
-              </li>
+              {%- assign link_title_down = link.title | downcase -%}
+              {%- unless link_title_down contains 'home' or link_title_down contains 'about' or link_title_down contains 'contact' or link_title_down contains 'all' -%}
+                <li class="footer-list-item">
+                  <a class="footer-link" href="{{ link.url }}">{{ link.title | escape }}</a>
+                </li>
+              {%- endunless -%}
             {%- endfor -%}
           </ul>
         </div>

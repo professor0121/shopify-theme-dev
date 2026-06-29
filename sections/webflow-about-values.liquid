@@ -4,7 +4,7 @@
 <div class="section pd-bottom-0">
   <div class="container-default w-container">
     
-    <div class="text-center mg-bottom-40px" data-w-id="8efc23d3-eda3-db04-107c-3228794bd1f3" style="opacity:1">
+    <div class="text-center mg-bottom-40px" data-w-id="8efc23d3-eda3-db04-107c-3228794bd1f3" style="opacity:0">
       <div class="inner-container _526px center">
         <h2 class="display-3 mg-bottom-12px">{{ section.settings.heading | escape }}</h2>
         <p class="mg-bottom-0">{{ section.settings.text | escape }}</p>
@@ -14,7 +14,13 @@
     <div class="inner-container _510px-mbl center">
       <div class="grid-3-columns gap-row-22px">
         {%- for block in section.blocks -%}
-          <div class="card our-values-card" {{ block.shopify_attributes }}>
+          {%- capture card_w_id -%}
+            {%- cycle 'a2f1beac-6545-2204-d191-471a36e7268c', '9ad72ae6-95af-2b7e-35d6-f68ee8131e9e', '8db84113-62d0-156d-4f17-9af16f18d695', 'ff1b10fd-4cb3-00c4-8552-753e6fc18e0f', '88853657-bfc2-670f-c73e-9d2afca3896e', '5a41c924-541a-ed88-a694-5ec47b72d3b6' -%}
+          {%- endcapture -%}
+          {%- capture card_style -%}
+            {%- cycle 'opacity:0;', 'opacity:0;', '', '', '', '' -%}
+          {%- endcapture -%}
+          <div class="card our-values-card" data-w-id="{{ card_w_id | strip }}" {% if card_style != blank %}style="{{ card_style }}"{% endif %} {{ block.shopify_attributes }}>
             {%- if block.settings.icon_url != blank -%}
               <img alt="{{ block.settings.title | escape }}" class="mg-bottom-32px" loading="lazy" src="{{ block.settings.icon_url }}" width="64" height="64" />
             {%- elsif block.settings.icon_image != blank -%}
@@ -103,6 +109,27 @@
           "settings": {
             "title": "Sustainability",
             "icon_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1e53a677399a4d6c3b_sustainability-value-icon-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "title": "Innovation",
+            "icon_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1d6148c01a165bdd13_innovation-value-icon-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "title": "Passion",
+            "icon_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1d923a59628d768fa0_passion-value-icon-shopper-webflow-ecommerce-template.svg"
+          }
+        },
+        {
+          "type": "value_item",
+          "settings": {
+            "title": "Team work",
+            "icon_url": "https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e7d1db38b2256d0819d42_team-work-value-icon-shopper-webflow-ecommerce-template.svg"
           }
         }
       ]

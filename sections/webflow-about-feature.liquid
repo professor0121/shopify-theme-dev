@@ -1,0 +1,79 @@
+{%- comment -%}
+  Webflow-compatible About Split Feature Section.
+{%- endcomment -%}
+<div class="section" style="filter:blur(10px)">
+  <div class="container-default w-container">
+    <div class="grid-2-columns _1-16fr---1fr gap-row-64px">
+      
+      <!-- Left Side Image -->
+      <div class="flex" data-w-id="e2f5d7bd-66cd-1888-c023-80dd4c1d89e0" style="opacity:0">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1400 | image_tag: alt: section.settings.heading, class: 'border-radius-44px fit-cover', loading: 'lazy', sizes: '(max-width: 479px) 94vw, (max-width: 767px) 95vw, (max-width: 991px) 49vw, (max-width: 1439px) 50vw, 687px', width: section.settings.image.width, height: section.settings.image.height }}
+        {%- else -%}
+          <img alt="High Quality Design" class="border-radius-44px fit-cover" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e80ebb5f61e3639a7cda7_high-quality-design-image-shopper-webflow-ecommerce-template.jpg" width="687" height="687" />
+        {%- endif -%}
+      </div>
+
+      <!-- Right Side Content -->
+      <div class="mg-top-and-bottom-64px mg-0-tablet" data-w-id="0086234c-b409-ed3e-fa9f-a69188e77c2c" style="opacity:0">
+        <div class="inner-container _570px _100-mbl">
+          <h2 class="display-3">{{ section.settings.heading | escape }}</h2>
+          <p class="mg-bottom-0">{{ section.settings.text_1 | escape }}</p>
+          <div class="divider _28px bg-neutral-300"></div>
+          <p class="mg-bottom-56px">{{ section.settings.text_2 | escape }}</p>
+          {%- if section.settings.btn_label != blank -%}
+            <a class="btn-primary w-button" href="{{ section.settings.btn_url | default: '/collections/all' }}">{{ section.settings.btn_label | escape }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow About Feature",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Care and love for creating high quality design",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "text_1",
+      "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit montes id odio feugiat dignissim aliquet quam viverra nulla sed mauris tortor tempor elit sapien egestas curabitur non dictum feugiat.",
+      "label": "Paragraph 1"
+    },
+    {
+      "type": "textarea",
+      "id": "text_2",
+      "default": "Lorem ipsum dolor sit amet consectetur adipiscing elit montes id odio feugiat dignissim aliquet quam viverra nulla sed mauris tortor tempor elit sapien egestas curabitur non dictum feugiat.",
+      "label": "Paragraph 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Feature Image"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "default": "Browse products",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow About Feature"
+    }
+  ]
+}
+{% endschema %}

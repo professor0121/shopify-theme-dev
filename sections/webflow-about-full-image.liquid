@@ -1,0 +1,31 @@
+{%- comment -%}
+  Webflow-compatible About Full-Width Image Section.
+{%- endcomment -%}
+<div class="card-full-width-image---img-wrapper" data-w-id="3cfa3b0f-14a2-6055-90d7-c39b6dd28255" style="opacity:0">
+  <div class="card-full-width-image---gradient-left"></div>
+  <div class="card-full-width-image---gradient-top-mbl"></div>
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: alt: section.settings.image.alt, class: 'fit-cover fit-position-left-0 width-100', loading: 'lazy', sizes: '(max-width: 479px) 97vw, (max-width: 767px) 92vw, (max-width: 991px) 41vw, (max-width: 1439px) 42vw, 555px', width: section.settings.image.width, height: section.settings.image.height }}
+  {%- else -%}
+    <img alt="High Quality Products - Commerce X Webflow Template" class="fit-cover fit-position-left-0 width-100" loading="lazy" src="https://cdn.prod.website-files.com/630784cc70ef0552ae1e91dc/630e62a369cd61fd8f8f0b74_high-quality-products-card-image-shopper-webflow-ecommerce-template.jpg" width="1112" height="600" />
+  {%- endif -%}
+  <div></div>
+</div>
+
+{% schema %}
+{
+  "name": "Webflow Full Width Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Full Width Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webflow Full Width Image"
+    }
+  ]
+}
+{% endschema %}

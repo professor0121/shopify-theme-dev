@@ -1,0 +1,22 @@
+{%- comment -%}
+  Dynamic router template for default pages.
+  Automatically maps 'about' and 'contact' page handles to their respective Webflow sections
+  without requiring manual template assignment in the Shopify admin.
+{%- endcomment -%}
+
+{%- if page.handle == 'about' -%}
+  {% section 'webflow-about-intro' %}
+  {% section 'webflow-about-stats' %}
+  {% section 'webflow-about-full-image' %}
+  {% section 'webflow-about-values' %}
+  {% section 'webflow-about-feature' %}
+  {% section 'webflow-partners' %}
+  {% section 'webflow-instagram' %}
+{%- elsif page.handle == 'contact' -%}
+  {% section 'webflow-contact' %}
+  {% section 'webflow-contact-details' %}
+  {% section 'webflow-showrooms' %}
+  {% section 'webflow-faq' %}
+{%- else -%}
+  {% section 'main-page' %}
+{%- endif -%}
