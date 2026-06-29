@@ -1,0 +1,22 @@
+{
+  "general": {
+    "search": {
+      "search": "Search"
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu"
+    }
+  },
+  "settings_schema": {
+    "colors": {
+      "name": "Colors",
+      "settings": {
+        "header__1": {
+          "content": "Theme Colors"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{%- comment -%}
+  Footer section.
+{%- endcomment -%}
+<footer class="footer">
+  <div class="container">
+    
+    <div class="footer__grid">
+      <!-- Column 1: Brand Info -->
+      <div class="footer-block">
+        <h3 class="footer-block__heading gradient-text">{{ shop.name }}</h3>
+        <p class="text-muted">{{ section.settings.bio_text }}</p>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-block">
+        <h3 class="footer-block__heading">Quick Links</h3>
+        <ul class="footer-block__details-content">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <!-- Column 3: Newsletter Sign-up -->
+      <div class="footer-block">
+        <h3 class="footer-block__heading">Stay Connected</h3>
+        <p class="text-muted">Sign up to receive the latest updates, promotions, and product arrivals.</p>
+        
+        {%- form 'customer', class: 'footer__newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input
+            id="NewsletterForm--{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="footer__newsletter-input"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}
+              autofocus
+              aria-invalid="true"
+              aria-describedby="Newsletter-error--{{ section.id }}"
+            {% elsif form.posted_successfully? %}
+              aria-describedby="Newsletter-success--{{ section.id }}"
+            {% endif %}
+            placeholder="your-email@example.com"
+            required
+          >
+          <button type="submit" class="button button--primary" name="commit" id="Subscribe--{{ section.id }}">
+            Subscribe
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+
+    <!-- Bottom Footer (Socials & Copyright) -->
+    <div class="footer__bottom">
+      <p class="text-muted">&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url }}. All rights reserved.</p>
+      
+      <div class="footer__social-icons">
+        {%- if settings.social_twitter_link != blank -%}
+          <a href="{{ settings.social_twitter_link }}" target="_blank" aria-label="Twitter">
+            {% render 'icon-twitter' %}
+          </a>
+        {%- endif -%}
+        {%- if settings.social_instagram_link != blank -%}
+          <a href="{{ settings.social_instagram_link }}" target="_blank" aria-label="Instagram">
+            {% render 'icon-instagram' %}
+          </a>
+        {%- endif -%}
+        {%- if settings.social_youtube_link != blank -%}
+          <a href="{{ settings.social_youtube_link }}" target="_blank" aria-label="YouTube">
+            {% render 'icon-youtube' %}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "bio_text",
+      "default": "Lumina is a premium eCommerce experience designed for high conversions and fluid accessibility.",
+      "label": "Brand Description"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "footer",
+      "label": "Footer Menu"
+    }
+  ]
+}
+{% endschema %}

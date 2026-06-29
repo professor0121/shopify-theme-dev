@@ -1,0 +1,51 @@
+{%- comment -%}
+  Product Card Component.
+{%- endcomment -%}
+<div class="product-card">
+  <div class="product-card__media">
+    {%- if product.available == false -%}
+      <span class="product-card__badge">Sold Out</span>
+    {%- elsif product.compare_at_price > product.price -%}
+      <span class="product-card__badge">Sale</span>
+    {%- endif -%}
+    
+    <a href="{{ product.url }}" aria-label="View {{ product.title | escape }}">
+      {%- if product.featured_media != blank -%}
+        {{ product.featured_media | image_url: width: 533 | image_tag: loading: 'lazy', class: 'motion-reduce', alt: product.title }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </a>
+  </div>
+
+  <div class="product-card__info">
+    {%- if product.vendor != blank -%}
+      <span class="product-card__vendor text-muted">{{ product.vendor }}</span>
+    {%- endif -%}
+    
+    <h3 class="product-card__title">
+      <a href="{{ product.url }}">{{ product.title | escape }}</a>
+    </h3>
+    
+    <div class="product-card__price-wrapper">
+      <span class="product-card__price gradient-text">{{ product.price | money }}</span>
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product-card__price--compare text-muted">{{ product.compare_at_price | money }}</span>
+      {%- endif -%}
+    </div>
+    
+    {%- if product.available -%}
+      {%- form 'product', product -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="button button--secondary product-card__quick-add">
+          Quick Add
+        </button>
+      {%- endform -%}
+    {%- else -%}
+      <button class="button button--secondary product-card__quick-add" type="button" disabled>
+        Sold Out
+      </button>
+    {%- endif -%}
+  </div>
+</div>

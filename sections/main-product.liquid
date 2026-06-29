@@ -1,0 +1,183 @@
+{%- comment -%}
+  Main Product Details Section.
+{%- endcomment -%}
+<section class="product-single container">
+  <div class="product-single__grid">
+    
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="product-gallery__main">
+        {%- if product.featured_media != blank -%}
+          {{ product.featured_media | image_url: width: 800 | image_tag: loading: 'eager', alt: product.title }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Product Info & Purchasing Form -->
+    <div class="product-info">
+      {%- if section.settings.show_vendor and product.vendor != blank -%}
+        <span class="product-info__vendor text-muted">{{ product.vendor }}</span>
+      {%- endif -%}
+
+      <h1 class="product-info__title">{{ product.title }}</h1>
+
+      <div class="product-info__price-wrapper">
+        <span class="product-info__price gradient-text" id="ProductPrice-{{ section.id }}">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+          <span class="product-card__price--compare text-muted" style="font-size: 1.8rem; margin-left: 1.5rem;" id="ComparePrice-{{ section.id }}">
+            {{ product.selected_or_first_available_variant.compare_at_price | money }}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <!-- Add to Cart Form -->
+      {%- form 'product', product, id: 'AddToCartForm', class: 'product-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        <!-- Option Selectors -->
+        {%- unless product.has_only_default_variant -%}
+          <div class="product-form__variants-wrapper">
+            {%- for option in product.options_with_values -%}
+              <div class="product-form__input">
+                <span class="form__label">{{ option.name }}</span>
+                <div class="product-form__variants">
+                  {%- for value in option.values -%}
+                    {%- liquid
+                      assign is_checked = false
+                      if option.selected_value == value
+                        assign is_checked = true
+                      endif
+                    -%}
+                    <div class="product-form__variant-option">
+                      <input
+                        type="radio"
+                        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                        name="{{ option.name }}"
+                        value="{{ value | escape }}"
+                        {% if is_checked %}checked{% endif %}
+                        data-option-index="{{ option.position | minus: 1 }}"
+                        onchange="handleVariantChange(this)"
+                      >
+                      <label class="product-form__variant-label" for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+                        {{ value }}
+                      </label>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+
+        <!-- Quantity & Add to Cart Trigger -->
+        <div class="product-form__actions">
+          <div class="product-form__quantity">
+            <span class="form__label">Quantity</span>
+            <quantity-input class="quantity">
+              <button class="quantity__button" name="minus" type="button">-</button>
+              <input class="quantity__input" type="number" name="quantity" value="1" min="1" aria-label="Quantity">
+              <button class="quantity__button" name="plus" type="button">+</button>
+            </quantity-input>
+          </div>
+
+          <div class="product-form__buttons">
+            <button
+              type="submit"
+              name="add"
+              class="button button--primary button--full-width"
+              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+            >
+              {%- if product.selected_or_first_available_variant.available -%}
+                Add to Cart
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+          </div>
+        </div>
+      {%- endform -%}
+
+      <div class="product-single__description">
+        <h3 class="h4">Product Description</h3>
+        <div class="rte text-muted" style="font-size: 1.4rem; line-height: 1.7;">
+          {{ product.description }}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Script to handle dynamic variant price updating -->
+<script>
+  const productVariants = {{ product.variants | json }};
+  
+  function handleVariantChange(input) {
+    const form = input.closest('form');
+    if (!form) return;
+    
+    // Find all selected options
+    const selectedOptions = Array.from(form.querySelectorAll('.product-form__variants input:checked'))
+      .map(radio => radio.value);
+      
+    // Match the selected variant from variants list
+    const matchedVariant = productVariants.find(variant => {
+      return variant.options.every((opt, index) => opt === selectedOptions[index]);
+    });
+    
+    const hiddenIdField = form.querySelector('input[name="id"]');
+    const submitBtn = form.querySelector('[type="submit"]');
+    const priceText = document.getElementById(`ProductPrice-{{ section.id }}`);
+    const comparePriceText = document.getElementById(`ComparePrice-{{ section.id }}`);
+
+    if (matchedVariant) {
+      // Update hidden variant ID input
+      if (hiddenIdField) hiddenIdField.value = matchedVariant.id;
+      
+      // Update button status
+      if (submitBtn) {
+        if (matchedVariant.available) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Add to Cart';
+        } else {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sold Out';
+        }
+      }
+      
+      // Update price text (format cents to local dollars/money formatting)
+      if (priceText) {
+        const formattedPrice = '$' + (matchedVariant.price / 100).toFixed(2);
+        priceText.textContent = formattedPrice;
+      }
+      
+      if (comparePriceText) {
+        if (matchedVariant.compare_at_price && matchedVariant.compare_at_price > matchedVariant.price) {
+          comparePriceText.textContent = '$' + (matchedVariant.compare_at_price / 100).toFixed(2);
+          comparePriceText.style.display = 'inline-block';
+        } else {
+          comparePriceText.style.display = 'none';
+        }
+      }
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Main Product Details",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Brand/Vendor",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

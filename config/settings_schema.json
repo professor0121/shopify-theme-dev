@@ -1,0 +1,143 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Lumina",
+    "theme_version": "1.0.0",
+    "theme_author": "Antigravity",
+    "theme_documentation_url": "https://github.com/shopify-theme-dev",
+    "theme_support_url": "https://github.com/shopify-theme-dev"
+  },
+  {
+    "name": "t:settings_schema.colors.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings_schema.colors.settings.header__1.content"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background Color",
+        "default": "#0f0f11"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text Color",
+        "default": "#f3f4f6"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "label": "Muted Text Color",
+        "default": "#9ca3af"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Accent (Gradient Start)",
+        "default": "#6366f1"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary Accent (Gradient End)",
+        "default": "#a855f7"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border Color",
+        "default": "rgba(255, 255, 255, 0.08)"
+      },
+      {
+        "type": "color",
+        "id": "color_card_bg",
+        "label": "Card Background",
+        "default": "rgba(255, 255, 255, 0.03)"
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_bg",
+        "label": "Button Background",
+        "default": "#6366f1"
+      },
+      {
+        "type": "color",
+        "id": "color_btn_text",
+        "label": "Button Text",
+        "default": "#ffffff"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Fonts"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "sans-serif"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "sans-serif"
+      }
+    ]
+  },
+  {
+    "name": "Layout & General",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Theme Options"
+      },
+      {
+        "type": "range",
+        "id": "grid_spacing",
+        "min": 10,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Grid Spacing",
+        "default": 24
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cart_drawer",
+        "label": "Enable AJAX Cart Drawer",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter URL"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube URL"
+      }
+    ]
+  }
+]

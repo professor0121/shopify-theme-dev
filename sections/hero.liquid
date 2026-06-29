@@ -1,0 +1,102 @@
+{%- comment -%}
+  Hero Section - Main Banner.
+{%- endcomment -%}
+<section class="hero text-center">
+  <div class="hero__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'eager', sizes: '100vw', widths: '375, 750, 1100, 1500, 1780, 2000' }}
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  <div class="hero__overlay"></div>
+  
+  <div class="hero__content container">
+    {%- if section.settings.subtitle != blank -%}
+      <p class="text-muted h4" style="text-transform: uppercase; letter-spacing: 0.2em;">
+        {{ section.settings.subtitle | escape }}
+      </p>
+    {%- endif -%}
+
+    <h1 class="hero__title">
+      {{ section.settings.title | escape }}
+    </h1>
+    
+    {%- if section.settings.text != blank -%}
+      <p class="hero__text text-muted">
+        {{ section.settings.text | escape }}
+      </p>
+    {%- endif -%}
+    
+    <div class="hero__buttons">
+      {%- if section.settings.button_1_label != blank -%}
+        <a href="{{ section.settings.button_1_link }}" class="button button--primary">
+          {{ section.settings.button_1_label | escape }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button_2_label != blank -%}
+        <a href="{{ section.settings.button_2_link }}" class="button button--secondary">
+          {{ section.settings.button_2_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "NEW ARRIVALS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Discover the Future of Shopping"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description Text",
+      "default": "Experience a faster, smoother, and stunningly gorgeous shopping journey powered by Lumina custom web layouts."
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Primary Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Secondary Button Label",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

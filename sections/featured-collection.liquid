@@ -1,0 +1,103 @@
+{%- comment -%}
+  Featured Collection Section.
+{%- endcomment -%}
+<section class="featured-collection container" style="margin-top: 8rem; margin-bottom: 8rem;">
+  
+  <div class="text-center" style="margin-bottom: 4rem;">
+    {%- if section.settings.subtitle != blank -%}
+      <p class="text-muted h4" style="text-transform: uppercase; letter-spacing: 0.15em;">
+        {{ section.settings.subtitle | escape }}
+      </p>
+    {%- endif -%}
+    
+    <h2 class="gradient-text" style="font-size: 3.6rem; font-weight: 800;">
+      {{ section.settings.title | escape }}
+    </h2>
+  </div>
+
+  <div class="product-grid">
+    {%- assign collection = collections[section.settings.collection] -%}
+    
+    {%- if collection != blank and collection.products.size > 0 -%}
+      {%- for product in collection.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- comment -%}
+        Fallback: Render Shopify Placeholders if no collection is selected
+      {%- endcomment -%}
+      {%- for i in (1..section.settings.limit) -%}
+        <div class="product-card">
+          <div class="product-card__media">
+            {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+          <div class="product-card__info">
+            <span class="product-card__vendor text-muted">Brand Name</span>
+            <h3 class="product-card__title">Placeholder Product {{ i }}</h3>
+            <div class="product-card__price-wrapper">
+              <span class="product-card__price">$49.99</span>
+            </div>
+            <button class="button button--secondary product-card__quick-add" type="button" disabled>
+              Quick Add
+            </button>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_view_all and collection != blank -%}
+    <div class="text-center" style="margin-top: 5rem;">
+      <a href="{{ collection.url }}" class="button button--secondary">
+        View All Products
+      </a>
+    </div>
+  {%- endif -%}
+
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "CURATED PRODUCTS"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "default": 4,
+      "label": "Products to Show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View All' Button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "title": "Discover the Future of Shopping",
+        "text": "Experience a faster, smoother, and stunningly gorgeous shopping journey powered by Lumina custom web layouts."
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Trending Products",
+        "subtitle": "CURATED FOR YOU",
+        "limit": 4
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured"
+  ]
+}

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Standard Static Page Section.
+{%- endcomment -%}
+<div class="container" style="margin-top: 6rem; margin-bottom: 8rem;">
+  <h1 class="gradient-text text-center" style="font-size: 4rem; font-weight: 800; margin-bottom: 4rem;">
+    {{ page.title | escape }}
+  </h1>
+  <div class="rte text-muted" style="max-width: 800px; margin: 0 auto; font-size: 1.6rem; line-height: 1.8;">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Static Page Content",
+  "settings": []
+}
+{% endschema %}
